@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		441076BB2966C24B00463BBB /* APIEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441076BA2966C24B00463BBB /* APIEndpoint.swift */; };
 		444C80EC2966783A0087BB1A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444C80EB2966783A0087BB1A /* AppDelegate.swift */; };
 		444C80EE2966783A0087BB1A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444C80ED2966783A0087BB1A /* SceneDelegate.swift */; };
 		444C80F02966783A0087BB1A /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444C80EF2966783A0087BB1A /* SearchViewController.swift */; };
@@ -36,6 +37,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		441076BA2966C24B00463BBB /* APIEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndpoint.swift; sourceTree = "<group>"; };
 		444C80E82966783A0087BB1A /* ParrotBooks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ParrotBooks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		444C80EB2966783A0087BB1A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		444C80ED2966783A0087BB1A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -76,6 +78,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		441076B92966C21A00463BBB /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				441076C02966CC1100463BBB /* Model */,
+				441076BA2966C24B00463BBB /* APIEndpoint.swift */,
+				441076BC2966C25F00463BBB /* APIResponse.swift */,
+				441076BE2966C27500463BBB /* SessionManager.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
 		444C80DF2966783A0087BB1A = {
 			isa = PBXGroup;
 			children = (
@@ -102,6 +115,7 @@
 				444C811B2966BE7F0087BB1A /* SceneDelegate */,
 				444C811C2966BECD0087BB1A /* Search */,
 				444C811D2966BED90087BB1A /* Detail */,
+				441076B92966C21A00463BBB /* Network */,
 				444C811F2966BF0D0087BB1A /* Assets */,
 				444C811E2966BEF80087BB1A /* Supporting Files */,
 			);
@@ -301,6 +315,7 @@
 				444C80F02966783A0087BB1A /* SearchViewController.swift in Sources */,
 				444C80EC2966783A0087BB1A /* AppDelegate.swift in Sources */,
 				444C80EE2966783A0087BB1A /* SceneDelegate.swift in Sources */,
+				441076BB2966C24B00463BBB /* APIEndpoint.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
