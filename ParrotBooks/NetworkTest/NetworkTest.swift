@@ -48,4 +48,32 @@ final class NetworkTest: XCTestCase {
         XCTAssertNotNil(result)
         XCTAssertEqual(expectedCount, result?.books.count)
     }
+    
+    func test_detail_isbn13_success() {
+        // given
+        let searchedIsbn13: String = "9781617294136"
+        let endpoint: APIEndpoint = .detail(isbn13: searchedIsbn13)
+        let urlResponse = HTTPURLResponse(
+            url: endpoint.url,
+            statusCode: 200,
+            httpVersion: nil,
+            headerFields: nil
+        )
+        let mockResponse = MockURLSession.MockResponse(data: endpoint.mockData, urlResponse: urlResponse, error: nil)
+        let mockSession = MockURLSession(response: mockResponse)
+        sut = SessionManager(session: mockSession)
+        
+        // when
+        var result: DetailedBook?
+        sut.detailBook(isbn13: searchedIsbn13) { response in
+            if let detailedBook = try? response.result.get() {
+                result = detailedBook
+            }
+        }
+        
+        // then
+        let expectedIsbn13: String = "9781617294136"
+        XCTAssertNotNil(result)
+        XCTAssertEqual(expectedIsbn13, result?.isbn13)
+    }
 }
