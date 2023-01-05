@@ -11,6 +11,8 @@ final class SearchViewController: UIViewController {
     
     private let searchBar = UISearchBar()
     
+    private var searchedBook: SearchedBook?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -35,5 +37,17 @@ extension SearchViewController: UISearchBarDelegate {
         #if DEBUG
         print("[searchBar] text: \(searchBar.text ?? "no text")")
         #endif
+        
+        guard let bookName = searchBar.text else { return }
+        SessionManager().searchBook(name: bookName) { response in
+            switch response.result {
+            case .success(let searchedBook):
+                self.searchedBook = searchedBook
+            case .failure(let error):
+                #if DEBUG
+                print("[searchBar] error: \(error)")
+                #endif
+            }
+        }
     }
 }
