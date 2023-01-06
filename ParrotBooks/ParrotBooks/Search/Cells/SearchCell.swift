@@ -85,6 +85,8 @@ final class SearchCell: UICollectionViewCell {
         subtitleLabel.text = nil
         priceLabel.text = nil
         isbn13Label.text = nil
+        storeUrlString = ""
+        imageView.image = nil
     }
     
     func configureCell(_ book: SearchedBook.Book) {
@@ -93,6 +95,12 @@ final class SearchCell: UICollectionViewCell {
         priceLabel.text = "Price: \(book.price)"
         isbn13Label.text = "ISBN13: \(book.isbn13)"
         storeUrlString = book.storeUrl
+        
+        if let url = URL(string: book.imageUrl) {
+            Task {
+                imageView.image = try await ImageLoader().fetch(url)
+            }
+        }
     }
     
     private func setupUI() {
