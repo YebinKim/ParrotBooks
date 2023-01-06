@@ -74,7 +74,7 @@ final class SearchViewController: UIViewController {
     
     private func generateBooksLayout() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1/2),
+            widthDimension: .fractionalWidth(1),
             heightDimension: .fractionalHeight(1)
         )
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
@@ -84,7 +84,7 @@ final class SearchViewController: UIViewController {
         
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
-            heightDimension: .fractionalHeight(1/3)
+            heightDimension: .fractionalHeight(1/4)
         )
         let group = NSCollectionLayoutGroup.horizontal(
             layoutSize: groupSize,
