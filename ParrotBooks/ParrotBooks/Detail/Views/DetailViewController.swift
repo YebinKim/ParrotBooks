@@ -187,6 +187,7 @@ final class DetailViewController: UIViewController {
     
     private func setupUI() {
         setupView()
+        setupStoreUrlButton()
         
         setupConstraint()
     }
@@ -195,6 +196,9 @@ final class DetailViewController: UIViewController {
         self.view.backgroundColor = .white
     }
     
+    private func setupStoreUrlButton() {
+        storeUrlButton.addTarget(self, action: #selector(storeUrlButtonTapped), for: .touchUpInside)
+    }
     private func setupConstraint() {
         self.view.addSubview(mainScrollView)
         mainScrollView.addSubview(mainStackView)
@@ -245,5 +249,10 @@ final class DetailViewController: UIViewController {
             
             pdfDownloadButton.widthAnchor.constraint(equalTo: mainStackView.widthAnchor),
         ])
+    }
+    
+    @objc
+    private func storeUrlButtonTapped() {
+        presenter.storeUrlButtonTapped()
     }
 }

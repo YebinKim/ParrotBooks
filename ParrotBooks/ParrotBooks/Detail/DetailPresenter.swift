@@ -15,6 +15,7 @@ final class DetailPresenter: DetailViewPresenter {
     
     weak var view: DetailViewController?
     private let isbn13: String
+    private var detailedBook: DetailedBook?
     
     init(isbn13: String) {
         self.isbn13 = isbn13
@@ -24,6 +25,7 @@ final class DetailPresenter: DetailViewPresenter {
         SessionManager().detailBook(isbn13: self.isbn13) { response in
             switch response.result {
             case .success(let detailedBook):
+                self.detailedBook = detailedBook
                 DispatchQueue.main.async {
                     self.view?.configureView(detailedBook: detailedBook)
                 }
@@ -33,5 +35,15 @@ final class DetailPresenter: DetailViewPresenter {
                 #endif
             }
         }
+    }
+    
+    func storeUrlButtonTapped() {
+        guard let detailedBook else { return }
+        #if DEBUG
+        print("[detail] storeUrlButtonTapped with: \(detailedBook.storeUrl)")
+        #endif
+        
+        guard let url = URL(string: detailedBook.storeUrl) else { return }
+        UIApplication.shared.open(url, options: [:])
     }
 }
