@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import PDFKit
 
 protocol DetailViewPresenter {
     init(isbn13: String)
@@ -45,5 +46,24 @@ final class DetailPresenter: DetailViewPresenter {
         
         guard let url = URL(string: detailedBook.storeUrl) else { return }
         UIApplication.shared.open(url, options: [:])
+    }
+    
+    func pdfDownloadButtonTapped(_ button: UIButton) {
+        guard let pdfUrls = detailedBook?.pdfUrls,
+              let name = button.titleLabel?.text else { return }
+        #if DEBUG
+        print("[detail] pdfDownloadButtonTapped with: \(pdfUrls)")
+        #endif
+        
+        if let urlString = pdfUrls[name],
+           let url = URL(string: urlString) {
+            DispatchQueue.global().async {
+                let pdfDocument = PDFDocument(url: url)
+                DispatchQueue.main.async {
+                    self.view?.pdfView.document = pdfDocument
+                    self.view?.pdfView.isHidden = false
+                }
+            }
+        }
     }
 }

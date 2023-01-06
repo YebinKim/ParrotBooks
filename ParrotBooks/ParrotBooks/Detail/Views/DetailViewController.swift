@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import PDFKit
 
 final class DetailViewController: UIViewController {
     
@@ -141,11 +142,14 @@ final class DetailViewController: UIViewController {
         return button
     }()
     
-    private let pdfDownloadButton: UIButton = {
-        let button = UIButton(configuration: .filled())
-        button.isHidden = true
-        button.setTitle("PDF 다운로드", for: .normal)
-        return button
+    let pdfView: PDFView = {
+        let pdfView = PDFView()
+        pdfView.isHidden = true
+        pdfView.autoScales = true
+        pdfView.displayMode = .singlePageContinuous
+        pdfView.displayDirection = .horizontal
+        pdfView.usePageViewController(true)
+        return pdfView
     }()
     
     override func viewDidLoad() {
@@ -176,7 +180,16 @@ final class DetailViewController: UIViewController {
         isbn13Label.text = "ISBN13: \(book.isbn13)"
         
         storeUrlButton.isHidden = book.storeUrl == ""
-        pdfDownloadButton.isHidden = book.pdfUrls == nil
+        
+        for (name, urlString) in book.pdfUrls ?? [:] {
+            let pdfDownloadButton = pdfDownloadButton(name: name, urlString: urlString)
+            mainStackView.addArrangedSubview(pdfDownloadButton)
+            pdfDownloadButton.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                pdfDownloadButton.widthAnchor.constraint(equalTo: mainStackView.widthAnchor),
+            ])
+            pdfDownloadButton.addTarget(self, action: #selector(pdfDownloadButtonTapped(_:)), for: .touchUpInside)
+        }
         
         if let url = URL(string: book.imageUrl) {
             Task {
@@ -199,6 +212,7 @@ final class DetailViewController: UIViewController {
     private func setupStoreUrlButton() {
         storeUrlButton.addTarget(self, action: #selector(storeUrlButtonTapped), for: .touchUpInside)
     }
+    
     private func setupConstraint() {
         self.view.addSubview(mainScrollView)
         mainScrollView.addSubview(mainStackView)
@@ -217,18 +231,24 @@ final class DetailViewController: UIViewController {
         mainStackView.addArrangedSubview(isbn10Label)
         mainStackView.addArrangedSubview(isbn13Label)
         mainStackView.addArrangedSubview(storeUrlButton)
-        mainStackView.addArrangedSubview(pdfDownloadButton)
         
         imageStackView.addArrangedSubview(imageView)
         
+        self.view.addSubview(pdfView)
+        
+        pdfView.translatesAutoresizingMaskIntoConstraints = false
         mainScrollView.translatesAutoresizingMaskIntoConstraints = false
         mainStackView.translatesAutoresizingMaskIntoConstraints = false
         imageStackView.translatesAutoresizingMaskIntoConstraints = false
         imageView.translatesAutoresizingMaskIntoConstraints = false
         storeUrlButton.translatesAutoresizingMaskIntoConstraints = false
-        pdfDownloadButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
+            pdfView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+            pdfView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
+            pdfView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
+            pdfView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
+            
             mainScrollView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 16),
             mainScrollView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
             mainScrollView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
@@ -246,13 +266,22 @@ final class DetailViewController: UIViewController {
             imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor),
             
             storeUrlButton.widthAnchor.constraint(equalTo: mainStackView.widthAnchor),
-            
-            pdfDownloadButton.widthAnchor.constraint(equalTo: mainStackView.widthAnchor),
         ])
+    }
+    
+    private func pdfDownloadButton(name: String, urlString: String) -> UIButton {
+        let button = UIButton(configuration: .filled())
+        button.setTitle(name, for: .normal)
+        return button
     }
     
     @objc
     private func storeUrlButtonTapped() {
         presenter.storeUrlButtonTapped()
+    }
+    
+    @objc
+    private func pdfDownloadButtonTapped(_ button: UIButton) {
+        presenter.pdfDownloadButtonTapped(button)
     }
 }
