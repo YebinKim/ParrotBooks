@@ -105,6 +105,8 @@ extension SearchViewController: UISearchBarDelegate {
         print("[searchBar] text: \(searchBar.text ?? "no text")")
         #endif
         
+        presenter.searchClear()
+        
         guard let name = searchBar.text else { return }
         presenter.searchBook(name)
     }
@@ -121,5 +123,9 @@ extension SearchViewController: UICollectionViewDelegate {
         }
         presenter.showDetailView(with: selectedBook.isbn13)
         collectionView.deselectItem(at: indexPath, animated: true)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        presenter.collectionViewWillDisplay(at: indexPath)
     }
 }

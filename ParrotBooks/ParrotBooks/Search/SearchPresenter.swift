@@ -20,7 +20,7 @@ final class SearchPresenter: SearchViewPresenter {
         case books
     }
     
-    weak var view: SearchViewController?
+    private weak var view: SearchViewController?
     private var searchModel: [SearchModel] = [] {
         didSet {
             let snapshot = snapshotForCurrentState()
@@ -29,6 +29,15 @@ final class SearchPresenter: SearchViewPresenter {
     }
     
     var dataSource: UICollectionViewDiffableDataSource<Section, Item>!
+    
+    private var searchedText: String = ""
+    
+    private let paging: Int = 10
+    private var totalCount: Int = 0
+    private var currentPage: Int = 1
+    private var hasNextPage: Bool {
+        totalCount / paging >= currentPage
+    }
     
     required init(view: SearchViewController) {
         self.view = view
@@ -75,20 +84,34 @@ final class SearchPresenter: SearchViewPresenter {
         return snapshot
     }
     
-    func searchBook(_ name: String) {
-        self.searchModel = []
-        
-        SessionManager().searchBook(name: name) { response in
+    func searchClear() {
+        searchModel = []
+        searchedText = ""
+    }
+    
+    func searchBook(_ name: String, page: Int? = nil) {
+        SessionManager().searchBook(name: name, page: page) { response in
             switch response.result {
             case .success(let searchedBook):
                 for book in searchedBook.books {
                     self.searchModel.append(SearchModel.convert(from: book))
                 }
+                self.searchedText = name
+                self.totalCount = Int(searchedBook.total) ?? 0
             case .failure(let error):
                 #if DEBUG
                 print("[search] searchBook error: \(error)")
                 #endif
             }
+        }
+    }
+    
+    func collectionViewWillDisplay(at indexPath: IndexPath) {
+        let isCloseToBottom: Bool = indexPath.row == searchModel.count - 1
+        
+        if hasNextPage, isCloseToBottom {
+            currentPage += 1
+            searchBook(searchedText, page: currentPage)
         }
     }
 }
