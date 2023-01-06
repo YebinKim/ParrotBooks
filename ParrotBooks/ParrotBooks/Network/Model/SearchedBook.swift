@@ -19,7 +19,7 @@ struct SearchedBook: Decodable {
         case books
     }
     
-    struct Book: Decodable, Hashable {
+    struct Book: Decodable {
         let title: String
         let subtitle: String
         let isbn13: String

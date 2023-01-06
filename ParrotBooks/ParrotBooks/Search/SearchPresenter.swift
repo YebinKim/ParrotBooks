@@ -14,14 +14,14 @@ protocol SearchViewPresenter {
 
 final class SearchPresenter: SearchViewPresenter {
     
-    typealias Item = SearchedBook.Book
+    typealias Item = SearchModel
     
     enum Section: CaseIterable {
         case books
     }
     
     weak var view: SearchViewController?
-    private var searchedBook: SearchedBook! {
+    private var searchModel: [SearchModel] = [] {
         didSet {
             let snapshot = snapshotForCurrentState()
             dataSource.apply(snapshot, animatingDifferences: true)
@@ -59,7 +59,7 @@ final class SearchPresenter: SearchViewPresenter {
                 // FIXME: temp layout
                 cell.backgroundColor = .brown
                 cell.delegate = self
-                cell.configureCell(self.searchedBook.books[indexPath.row])
+                cell.configureCell(self.searchModel[indexPath.row])
                 return cell
             }
         }
@@ -71,18 +71,19 @@ final class SearchPresenter: SearchViewPresenter {
     private func snapshotForCurrentState() -> NSDiffableDataSourceSnapshot<Section, Item> {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
         snapshot.appendSections([Section.books])
-        
-        if let books = searchedBook?.books {
-            snapshot.appendItems(books)
-        }
+        snapshot.appendItems(searchModel)
         return snapshot
     }
     
     func searchBook(_ name: String) {
+        self.searchModel = []
+        
         SessionManager().searchBook(name: name) { response in
             switch response.result {
             case .success(let searchedBook):
-                self.searchedBook = searchedBook
+                for book in searchedBook.books {
+                    self.searchModel.append(SearchModel.convert(from: book))
+                }
             case .failure(let error):
                 #if DEBUG
                 print("[search] searchBook error: \(error)")

@@ -89,7 +89,7 @@ final class SearchCell: UICollectionViewCell {
         imageView.image = nil
     }
     
-    func configureCell(_ book: SearchedBook.Book) {
+    func configureCell(_ book: SearchModel) {
         titleLabel.text = book.title
         subtitleLabel.text = book.subtitle
         priceLabel.text = "Price: \(book.price)"
