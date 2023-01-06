@@ -62,7 +62,7 @@ class SearchInfoHeaderView: UICollectionReusableView {
             labelStackView.topAnchor.constraint(equalTo: self.topAnchor),
             labelStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             labelStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            labelStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+            labelStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -32),
         ])
     }
 }

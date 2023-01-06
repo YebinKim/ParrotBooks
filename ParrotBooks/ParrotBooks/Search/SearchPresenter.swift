@@ -72,13 +72,11 @@ final class SearchPresenter: SearchViewPresenter {
             switch sectionType {
             case .books:
                 guard let cell = collectionView.dequeueReusableCell(
-                    withReuseIdentifier: SearchCell.identifier,
+                    withReuseIdentifier: SearchBookCell.identifier,
                     for: indexPath
-                ) as? SearchCell else {
+                ) as? SearchBookCell else {
                     fatalError("[search] Could not create new cell")
                 }
-                // FIXME: temp layout
-                cell.backgroundColor = .brown
                 cell.delegate = self
                 cell.configureCell(self.searchModel[indexPath.row])
                 return cell
@@ -146,7 +144,7 @@ final class SearchPresenter: SearchViewPresenter {
     }
 }
 
-extension SearchPresenter: SearchCellDelegate {
+extension SearchPresenter: SearchBookCellDelegate {
     func storeUrlButtonTapped(with urlString: String) {
         #if DEBUG
         print("[search] storeUrlButtonTapped with: \(urlString)")

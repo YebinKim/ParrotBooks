@@ -1,5 +1,5 @@
 //
-//  SearchCell.swift
+//  SearchBookCell.swift
 //  ParrotBooks
 //
 //  Created by vivi on 2023/01/06.
@@ -7,18 +7,16 @@
 
 import UIKit
 
-protocol SearchCellDelegate: AnyObject {
+protocol SearchBookCellDelegate: AnyObject {
     func storeUrlButtonTapped(with urlString: String)
 }
 
-final class SearchCell: UICollectionViewCell {
+final class SearchBookCell: UICollectionViewCell {
     
-    weak var delegate: SearchCellDelegate?
+    weak var delegate: SearchBookCellDelegate?
     
     private let imageView: UIImageView = {
         let imageView = UIImageView()
-        // FIXME: temp layout
-        imageView.backgroundColor = .orange
         imageView.contentMode = .scaleAspectFill
         return imageView
     }()
@@ -128,9 +126,9 @@ final class SearchCell: UICollectionViewCell {
         
         NSLayoutConstraint.activate([
             imageView.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor),
-            imageView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 16),
-            imageView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -16),
-            imageView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
+            imageView.topAnchor.constraint(equalTo: self.contentView.topAnchor),
+            imageView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
+            imageView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
             imageView.widthAnchor.constraint(equalToConstant: 96),
             
             labelStackView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 16),

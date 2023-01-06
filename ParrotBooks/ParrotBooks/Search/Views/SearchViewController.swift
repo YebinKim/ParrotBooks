@@ -39,7 +39,7 @@ final class SearchViewController: UIViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
         collectionView.delegate = self
         collectionView.register(SearchInfoHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SearchInfoHeaderView.identifier)
-        collectionView.register(SearchCell.self, forCellWithReuseIdentifier: SearchCell.identifier)
+        collectionView.register(SearchBookCell.self, forCellWithReuseIdentifier: SearchBookCell.identifier)
         self.collectionView = collectionView
     }
     
