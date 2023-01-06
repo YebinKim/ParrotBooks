@@ -99,6 +99,8 @@ final class SearchBookCell: UICollectionViewCell {
                 imageView.image = try await ImageLoader().fetch(url)
             }
         }
+        
+        subtitleLabel.isHidden = book.subtitle.isEmpty
     }
     
     private func setupUI() {
