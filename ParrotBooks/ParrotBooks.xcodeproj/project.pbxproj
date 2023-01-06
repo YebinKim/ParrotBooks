@@ -30,6 +30,7 @@
 		444C81212966BF2C0087BB1A /* SearchViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 444C81202966BF2C0087BB1A /* SearchViewController.storyboard */; };
 		44B8C4CA2967E64400984FBA /* SearchPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B8C4C92967E64400984FBA /* SearchPresenter.swift */; };
 		44EB36362968218B00B5F4FA /* SearchInfoHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44EB36352968218B00B5F4FA /* SearchInfoHeaderView.swift */; };
+		44EB363B296831D400B5F4FA /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44EB363A296831D400B5F4FA /* DetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +86,7 @@
 		444C81202966BF2C0087BB1A /* SearchViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SearchViewController.storyboard; sourceTree = "<group>"; };
 		44B8C4C92967E64400984FBA /* SearchPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPresenter.swift; sourceTree = "<group>"; };
 		44EB36352968218B00B5F4FA /* SearchInfoHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchInfoHeaderView.swift; sourceTree = "<group>"; };
+		44EB363A296831D400B5F4FA /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -244,6 +246,7 @@
 		444C811D2966BED90087BB1A /* Detail */ = {
 			isa = PBXGroup;
 			children = (
+				44EB3637296831BA00B5F4FA /* Views */,
 			);
 			path = Detail;
 			sourceTree = "<group>";
@@ -263,6 +266,14 @@
 				444C80F42966783B0087BB1A /* Assets.xcassets */,
 			);
 			path = Assets;
+			sourceTree = "<group>";
+		};
+		44EB3637296831BA00B5F4FA /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				44EB363A296831D400B5F4FA /* DetailViewController.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -435,6 +446,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				441C25292967FF95005168C5 /* ImageLoader.swift in Sources */,
+				44EB363B296831D400B5F4FA /* DetailViewController.swift in Sources */,
 				444C80F02966783A0087BB1A /* SearchViewController.swift in Sources */,
 				44189FCF296783FA002B5648 /* UICollectionView+Extension.swift in Sources */,
 				441C252B29680470005168C5 /* SearchModel.swift in Sources */,

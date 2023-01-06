@@ -14,6 +14,7 @@ struct DetailedBook: Decodable {
     let subtitle: String
     let authors: String
     let publisher: String
+    let language: String?
     let isbn10: String
     let isbn13: String
     let pages: String
@@ -23,7 +24,7 @@ struct DetailedBook: Decodable {
     let price: String
     let imageUrl: String
     let storeUrl: String
-    let pdfUrls: [String: String]
+    let pdfUrls: [String: String]?
     
     enum CodingKeys: String, CodingKey {
         case error
@@ -31,6 +32,7 @@ struct DetailedBook: Decodable {
         case subtitle
         case authors
         case publisher
+        case language
         case isbn10
         case isbn13
         case pages
