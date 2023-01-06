@@ -98,5 +98,8 @@ extension SearchPresenter: SearchCellDelegate {
         #if DEBUG
         print("[search] storeUrlButtonTapped with: \(urlString)")
         #endif
+        
+        guard let url = URL(string: urlString) else { return }
+        UIApplication.shared.open(url, options: [:])
     }
 }
