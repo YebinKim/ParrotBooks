@@ -9,30 +9,15 @@ import UIKit
 
 final class SearchViewController: UIViewController {
     
-    typealias Item = SearchedBook.Book
+    lazy var presenter = SearchPresenter(view: self)
     
-    enum Section: CaseIterable {
-        case books
-    }
-    
+    var collectionView: UICollectionView!
     private let searchBar = UISearchBar()
-    
-    private var searchedBook: SearchedBook? {
-        didSet {
-            let snapshot = snapshotForCurrentState()
-            dataSource?.apply(snapshot, animatingDifferences: true)
-        }
-    }
-    
-    private var collectionView: UICollectionView!
-    private var dataSource: UICollectionViewDiffableDataSource<Section, Item>!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupUI()
-        
-        configureDataSource()
     }
     
     private func setupUI() {
@@ -63,7 +48,7 @@ final class SearchViewController: UIViewController {
             layoutEnvironment: NSCollectionLayoutEnvironment
         ) -> NSCollectionLayoutSection? in
             
-            let sectionLayoutKind = Section.allCases[sectionIndex]
+            let sectionLayoutKind = SearchPresenter.Section.allCases[sectionIndex]
             switch sectionLayoutKind {
             case .books:
                 return self.generateBooksLayout()
@@ -111,41 +96,6 @@ final class SearchViewController: UIViewController {
             collectionView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
         ])
     }
-    
-    private func configureDataSource() {
-        dataSource = UICollectionViewDiffableDataSource<Section, Item>(collectionView: collectionView) {(
-            collectionView: UICollectionView,
-            indexPath: IndexPath,
-            item: Item
-        ) -> UICollectionViewCell? in
-            
-            let sectionType = Section.allCases[indexPath.section]
-            switch sectionType {
-            case .books:
-                guard let cell = collectionView.dequeueReusableCell(
-                    withReuseIdentifier: SearchCell.identifier,
-                    for: indexPath
-                ) as? SearchCell else {
-                    fatalError("Could not create new cell")
-                }
-                cell.backgroundColor = .brown
-                return cell
-            }
-        }
-        
-        let snapshot = snapshotForCurrentState()
-        dataSource.apply(snapshot, animatingDifferences: false)
-    }
-    
-    private func snapshotForCurrentState() -> NSDiffableDataSourceSnapshot<Section, Item> {
-        var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
-        snapshot.appendSections([Section.books])
-        
-        if let books = searchedBook?.books {
-            snapshot.appendItems(books)
-        }
-        return snapshot
-    }
 }
 
 extension SearchViewController: UISearchBarDelegate {
@@ -155,20 +105,21 @@ extension SearchViewController: UISearchBarDelegate {
         print("[searchBar] text: \(searchBar.text ?? "no text")")
         #endif
         
-        guard let bookName = searchBar.text else { return }
-        SessionManager().searchBook(name: bookName) { response in
-            switch response.result {
-            case .success(let searchedBook):
-                self.searchedBook = searchedBook
-            case .failure(let error):
-                #if DEBUG
-                print("[searchBar] error: \(error)")
-                #endif
-            }
-        }
+        guard let name = searchBar.text else { return }
+        presenter.searchBook(name)
     }
 }
 
 extension SearchViewController: UICollectionViewDelegate {
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let selectedBook = presenter.dataSource.itemIdentifier(for: indexPath) else {
+            #if DEBUG
+            print("[searchCollectionView] non exist cell, index: \(indexPath)")
+            #endif
+            return
+        }
+        presenter.showDetailView(with: selectedBook.isbn13)
+        collectionView.deselectItem(at: indexPath, animated: true)
+    }
 }

@@ -26,6 +26,7 @@
 		444C810D2966783B0087BB1A /* ParrotBooksUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444C810C2966783B0087BB1A /* ParrotBooksUITests.swift */; };
 		444C810F2966783B0087BB1A /* ParrotBooksUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444C810E2966783B0087BB1A /* ParrotBooksUITestsLaunchTests.swift */; };
 		444C81212966BF2C0087BB1A /* SearchViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 444C81202966BF2C0087BB1A /* SearchViewController.storyboard */; };
+		44B8C4CA2967E64400984FBA /* SearchPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B8C4C92967E64400984FBA /* SearchPresenter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +78,7 @@
 		444C810C2966783B0087BB1A /* ParrotBooksUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParrotBooksUITests.swift; sourceTree = "<group>"; };
 		444C810E2966783B0087BB1A /* ParrotBooksUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParrotBooksUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		444C81202966BF2C0087BB1A /* SearchViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SearchViewController.storyboard; sourceTree = "<group>"; };
+		44B8C4C92967E64400984FBA /* SearchPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPresenter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -223,6 +225,7 @@
 			isa = PBXGroup;
 			children = (
 				44189FCA2967839E002B5648 /* Cells */,
+				44B8C4C92967E64400984FBA /* SearchPresenter.swift */,
 				444C80EF2966783A0087BB1A /* SearchViewController.swift */,
 				444C81202966BF2C0087BB1A /* SearchViewController.storyboard */,
 			);
@@ -431,6 +434,7 @@
 				441076C62966D27900463BBB /* DetailedBook.swift in Sources */,
 				444C80EE2966783A0087BB1A /* SceneDelegate.swift in Sources */,
 				441076C82966EBCC00463BBB /* MockURLSession.swift in Sources */,
+				44B8C4CA2967E64400984FBA /* SearchPresenter.swift in Sources */,
 				441076BD2966C25F00463BBB /* APIResponse.swift in Sources */,
 				441076BB2966C24B00463BBB /* APIEndpoint.swift in Sources */,
 				44189FD129678447002B5648 /* NSObject+Extension.swift in Sources */,

@@ -7,10 +7,17 @@
 
 import UIKit
 
+protocol SearchCellDelegate: AnyObject {
+    func storeUrlButtonTapped(with urlString: String)
+}
+
 final class SearchCell: UICollectionViewCell {
+    
+    weak var delegate: SearchCellDelegate?
     
     private let imageView: UIImageView = {
         let imageView = UIImageView()
+        // FIXME: temp layout
         imageView.backgroundColor = .orange
         imageView.contentMode = .scaleAspectFill
         return imageView
@@ -25,25 +32,29 @@ final class SearchCell: UICollectionViewCell {
     }()
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "titleLabel"
+        label.numberOfLines = 2
+        label.adjustsFontSizeToFitWidth = true
         label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         return label
     }()
     private let subtitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "subtitleLabel"
+        label.numberOfLines = 3
+        label.adjustsFontSizeToFitWidth = true
         label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         return label
     }()
     private let priceLabel: UILabel = {
         let label = UILabel()
-        label.text = "priceLabel"
+        label.numberOfLines = 1
+        label.adjustsFontSizeToFitWidth = true
         label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         return label
     }()
     private let isbn13Label: UILabel = {
         let label = UILabel()
-        label.text = "isbn13Label"
+        label.numberOfLines = 1
+        label.adjustsFontSizeToFitWidth = true
         label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         return label
     }()
@@ -52,8 +63,10 @@ final class SearchCell: UICollectionViewCell {
         let button = UIButton()
         button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
         button.setTitle("스토어 바로가기", for: .normal)
+        button.setTitleColor(.blue, for: .normal)
         return button
     }()
+    private var storeUrlString: String = ""
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -67,9 +80,23 @@ final class SearchCell: UICollectionViewCell {
         setupUI()
     }
     
+    override func prepareForReuse() {
+        titleLabel.text = nil
+        subtitleLabel.text = nil
+        priceLabel.text = nil
+        isbn13Label.text = nil
+    }
+    
+    func configureCell(_ book: SearchedBook.Book) {
+        titleLabel.text = book.title
+        subtitleLabel.text = book.subtitle
+        priceLabel.text = "Price: \(book.price)"
+        isbn13Label.text = "ISBN13: \(book.isbn13)"
+        storeUrlString = book.storeUrl
+    }
+    
     private func setupUI() {
         setupStoreUrlButton()
-        
         setupConstraint()
     }
     
@@ -99,7 +126,7 @@ final class SearchCell: UICollectionViewCell {
             imageView.widthAnchor.constraint(equalToConstant: 96),
             
             labelStackView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 16),
-            labelStackView.bottomAnchor.constraint(equalTo: self.storeUrlButton.topAnchor, constant: -8),
+            labelStackView.bottomAnchor.constraint(equalTo: self.storeUrlButton.topAnchor),
             labelStackView.leadingAnchor.constraint(equalTo: self.imageView.trailingAnchor, constant: 16),
             labelStackView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16),
             
@@ -110,5 +137,6 @@ final class SearchCell: UICollectionViewCell {
     
     @objc
     private func storeUrlButtonTapped() {
+        delegate?.storeUrlButtonTapped(with: storeUrlString)
     }
 }
