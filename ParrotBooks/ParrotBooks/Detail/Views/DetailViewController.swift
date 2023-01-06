@@ -9,6 +9,19 @@ import UIKit
 
 final class DetailViewController: UIViewController {
     
+    private let presenter: DetailPresenter
+    
+    init(presenter: DetailPresenter) {
+        self.presenter = presenter
+        super.init(nibName: nil, bundle: nil)
+        
+        presenter.view = self
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     private let mainScrollView: UIScrollView = {
         let scrollView = UIScrollView()
         return scrollView
@@ -37,84 +50,100 @@ final class DetailViewController: UIViewController {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         label.adjustsFontSizeToFitWidth = true
         return label
     }()
     
     private let subtitleLabel: UILabel = {
         let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.numberOfLines = 2
         label.adjustsFontSizeToFitWidth = true
         return label
     }()
     
     private let descriptionLabel: UILabel = {
         let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 14)
+        label.numberOfLines = 10
         label.adjustsFontSizeToFitWidth = true
         return label
     }()
     
     private let authorLabel: UILabel = {
         let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 14)
         label.adjustsFontSizeToFitWidth = true
         return label
     }()
     
     private let publisherLabel: UILabel = {
         let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 14)
         label.adjustsFontSizeToFitWidth = true
         return label
     }()
     
     private let pagesLabel: UILabel = {
         let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 14)
         label.adjustsFontSizeToFitWidth = true
         return label
     }()
     
     private let yearLabel: UILabel = {
         let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 14)
         label.adjustsFontSizeToFitWidth = true
         return label
     }()
     
     private let ratingLabel: UILabel = {
         let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 14)
         label.adjustsFontSizeToFitWidth = true
         return label
     }()
     
     private let priceLabel: UILabel = {
         let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 14)
         label.adjustsFontSizeToFitWidth = true
         return label
     }()
     
     private let languageLabel: UILabel = {
         let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 14)
         label.adjustsFontSizeToFitWidth = true
         return label
     }()
     
     private let isbn10Label: UILabel = {
         let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 14)
         label.adjustsFontSizeToFitWidth = true
         return label
     }()
     
     private let isbn13Label: UILabel = {
         let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 14)
         label.adjustsFontSizeToFitWidth = true
         return label
     }()
     
     private let storeUrlButton: UIButton = {
         let button = UIButton(configuration: .filled())
+        button.isHidden = true
         button.setTitle("스토어 바로가기", for: .normal)
         return button
     }()
     
     private let pdfDownloadButton: UIButton = {
         let button = UIButton(configuration: .filled())
+        button.isHidden = true
         button.setTitle("PDF 다운로드", for: .normal)
         return button
     }()
@@ -123,6 +152,8 @@ final class DetailViewController: UIViewController {
         super.viewDidLoad()
         
         setupUI()
+        
+        presenter.fetchDetailBook()
     }
     
     func configureView(detailedBook book: DetailedBook) {
@@ -144,6 +175,7 @@ final class DetailViewController: UIViewController {
         isbn10Label.text = "ISBN10: \(book.isbn10)"
         isbn13Label.text = "ISBN13: \(book.isbn13)"
         
+        storeUrlButton.isHidden = book.storeUrl == ""
         pdfDownloadButton.isHidden = book.pdfUrls == nil
         
         if let url = URL(string: book.imageUrl) {

@@ -55,6 +55,9 @@ final class SearchPresenter: SearchViewPresenter {
     }
     
     func showDetailView(with isbn13: String) {
+        let detailPresenter = DetailPresenter(isbn13: isbn13)
+        let detailView = DetailViewController(presenter: detailPresenter)
+        self.view?.navigationController?.present(detailView, animated: true)
     }
     
     private func configureDataSource() {
