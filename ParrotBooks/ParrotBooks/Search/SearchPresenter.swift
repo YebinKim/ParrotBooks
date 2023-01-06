@@ -33,10 +33,20 @@ final class SearchPresenter: SearchViewPresenter {
     private var searchedText: String = ""
     
     private let paging: Int = 10
-    private var totalCount: Int = 0
+    private var totalCount: Int = 0 {
+        didSet {
+            guard totalCount != oldValue else { return }
+            DispatchQueue.main.async {
+                self.view?.collectionView.reloadData()
+            }
+        }
+    }
     private var currentPage: Int = 1
+    private var lastPage: Int {
+        totalCount / paging + 1
+    }
     private var hasNextPage: Bool {
-        totalCount / paging >= currentPage
+        lastPage > currentPage
     }
     
     required init(view: SearchViewController) {
@@ -50,7 +60,9 @@ final class SearchPresenter: SearchViewPresenter {
     private func configureDataSource() {
         guard let searchCollecionView = view?.collectionView else { return }
         
-        dataSource = UICollectionViewDiffableDataSource<Section, Item>(collectionView: searchCollecionView) {(
+        dataSource = UICollectionViewDiffableDataSource<Section, Item>(
+            collectionView: searchCollecionView
+        ) {(
             collectionView: UICollectionView,
             indexPath: IndexPath,
             item: Item
@@ -71,6 +83,24 @@ final class SearchPresenter: SearchViewPresenter {
                 cell.configureCell(self.searchModel[indexPath.row])
                 return cell
             }
+        }
+        
+        dataSource.supplementaryViewProvider = {(
+            collectionView: UICollectionView,
+            kind: String,
+            indexPath: IndexPath
+        ) -> UICollectionReusableView? in
+            guard let supplementaryView = collectionView.dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: SearchInfoHeaderView.identifier,
+                for: indexPath) as? SearchInfoHeaderView else {
+                    fatalError("[search] Could not create header")
+                }
+            supplementaryView.configureView(
+                totalCountText: "총 \(self.totalCount)건 검색됨",
+                currentPageText: "\(self.currentPage) / \(self.lastPage)"
+            )
+            return supplementaryView
         }
         
         let snapshot = snapshotForCurrentState()

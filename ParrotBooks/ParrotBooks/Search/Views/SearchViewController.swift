@@ -38,6 +38,7 @@ final class SearchViewController: UIViewController {
         let collectionViewLayout: UICollectionViewLayout = generateLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
         collectionView.delegate = self
+        collectionView.register(SearchInfoHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SearchInfoHeaderView.identifier)
         collectionView.register(SearchCell.self, forCellWithReuseIdentifier: SearchCell.identifier)
         self.collectionView = collectionView
     }
@@ -79,7 +80,17 @@ final class SearchViewController: UIViewController {
             top: 8, leading: 8, bottom: 0, trailing: 8
         )
         
+        let headerSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .absolute(36)
+        )
+        let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: headerSize,
+            elementKind: UICollectionView.elementKindSectionHeader,
+            alignment: .top
+        )
         let section = NSCollectionLayoutSection(group: group)
+        section.boundarySupplementaryItems = [sectionHeader]
         
         return section
     }
