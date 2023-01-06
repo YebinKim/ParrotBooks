@@ -14,6 +14,9 @@
 		441076C62966D27900463BBB /* DetailedBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441076C52966D27900463BBB /* DetailedBook.swift */; };
 		441076C82966EBCC00463BBB /* MockURLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441076C72966EBCC00463BBB /* MockURLSession.swift */; };
 		441076D32966FA2400463BBB /* NetworkTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441076D22966FA2400463BBB /* NetworkTest.swift */; };
+		44189FCC296783AE002B5648 /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44189FCB296783AE002B5648 /* SearchCell.swift */; };
+		44189FCF296783FA002B5648 /* UICollectionView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44189FCE296783FA002B5648 /* UICollectionView+Extension.swift */; };
+		44189FD129678447002B5648 /* NSObject+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44189FD029678447002B5648 /* NSObject+Extension.swift */; };
 		444C80EC2966783A0087BB1A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444C80EB2966783A0087BB1A /* AppDelegate.swift */; };
 		444C80EE2966783A0087BB1A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444C80ED2966783A0087BB1A /* SceneDelegate.swift */; };
 		444C80F02966783A0087BB1A /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444C80EF2966783A0087BB1A /* SearchViewController.swift */; };
@@ -58,6 +61,9 @@
 		441076C72966EBCC00463BBB /* MockURLSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLSession.swift; sourceTree = "<group>"; };
 		441076D02966FA2400463BBB /* NetworkTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NetworkTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		441076D22966FA2400463BBB /* NetworkTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkTest.swift; sourceTree = "<group>"; };
+		44189FCB296783AE002B5648 /* SearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCell.swift; sourceTree = "<group>"; };
+		44189FCE296783FA002B5648 /* UICollectionView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Extension.swift"; sourceTree = "<group>"; };
+		44189FD029678447002B5648 /* NSObject+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+Extension.swift"; sourceTree = "<group>"; };
 		444C80E82966783A0087BB1A /* ParrotBooks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ParrotBooks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		444C80EB2966783A0087BB1A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		444C80ED2966783A0087BB1A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -134,6 +140,23 @@
 			path = NetworkTest;
 			sourceTree = "<group>";
 		};
+		44189FCA2967839E002B5648 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				44189FCB296783AE002B5648 /* SearchCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		44189FCD296783E0002B5648 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				44189FD029678447002B5648 /* NSObject+Extension.swift */,
+				44189FCE296783FA002B5648 /* UICollectionView+Extension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		444C80DF2966783A0087BB1A = {
 			isa = PBXGroup;
 			children = (
@@ -163,6 +186,7 @@
 				444C811C2966BECD0087BB1A /* Search */,
 				444C811D2966BED90087BB1A /* Detail */,
 				441076B92966C21A00463BBB /* Network */,
+				44189FCD296783E0002B5648 /* Extensions */,
 				444C811F2966BF0D0087BB1A /* Assets */,
 				444C811E2966BEF80087BB1A /* Supporting Files */,
 			);
@@ -198,6 +222,7 @@
 		444C811C2966BECD0087BB1A /* Search */ = {
 			isa = PBXGroup;
 			children = (
+				44189FCA2967839E002B5648 /* Cells */,
 				444C80EF2966783A0087BB1A /* SearchViewController.swift */,
 				444C81202966BF2C0087BB1A /* SearchViewController.storyboard */,
 			);
@@ -398,6 +423,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				444C80F02966783A0087BB1A /* SearchViewController.swift in Sources */,
+				44189FCF296783FA002B5648 /* UICollectionView+Extension.swift in Sources */,
+				44189FCC296783AE002B5648 /* SearchCell.swift in Sources */,
 				444C80EC2966783A0087BB1A /* AppDelegate.swift in Sources */,
 				441076C22966CC2300463BBB /* SearchedBook.swift in Sources */,
 				441076BF2966C27500463BBB /* SessionManager.swift in Sources */,
@@ -406,6 +433,7 @@
 				441076C82966EBCC00463BBB /* MockURLSession.swift in Sources */,
 				441076BD2966C25F00463BBB /* APIResponse.swift in Sources */,
 				441076BB2966C24B00463BBB /* APIEndpoint.swift in Sources */,
+				44189FD129678447002B5648 /* NSObject+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
