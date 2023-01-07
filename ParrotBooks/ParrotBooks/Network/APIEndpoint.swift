@@ -15,7 +15,9 @@ enum APIEndpoint {
     static let baseUrl: String = "https://api.itbook.store/1.0/"
     
     var url: URL {
-        return URL(string: "\(APIEndpoint.baseUrl)\(path)")!
+        let baseUrl: String = "\(APIEndpoint.baseUrl)\(path)"
+        let encodingUrl: String = baseUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+        return URL(string: encodingUrl)!
     }
     
     var method: String {
