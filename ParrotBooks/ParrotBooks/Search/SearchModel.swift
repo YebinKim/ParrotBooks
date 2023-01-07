@@ -7,7 +7,23 @@
 
 import UIKit
 
-struct SearchModel: Hashable {
+struct SearchInfoModel: Hashable {
+    
+    var searchedText: String = ""
+    
+    var totalCount: Int = 0
+    var currentPage: Int = 1
+    var lastPage: Int {
+        totalCount / SearchInfoModel.paging + 1
+    }
+    var hasNextPage: Bool {
+        lastPage > currentPage
+    }
+    
+    static let paging: Int = 10
+}
+
+struct SearchBookModel: Hashable {
     
     let title: String
     let subtitle: String
@@ -16,16 +32,8 @@ struct SearchModel: Hashable {
     let imageUrl: String
     let storeUrl: String
     
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(title)
-    }
-    
-    static func == (lhs: SearchModel, rhs: SearchModel) -> Bool {
-        lhs.title == rhs.title
-    }
-    
-    static func convert(from book: SearchedBook.Book) -> SearchModel {
-        let searchModel = SearchModel(
+    static func convert(from book: SearchedBook.Book) -> SearchBookModel {
+        let searchModel = SearchBookModel(
             title: book.title,
             subtitle: book.subtitle ?? "",
             isbn13: book.isbn13,

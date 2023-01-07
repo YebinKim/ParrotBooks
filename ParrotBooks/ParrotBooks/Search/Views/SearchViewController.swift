@@ -43,7 +43,7 @@ final class SearchViewController: UIViewController {
         let collectionViewLayout: UICollectionViewLayout = generateLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
         collectionView.delegate = self
-        collectionView.register(SearchInfoHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SearchInfoHeaderView.identifier)
+        collectionView.register(SearchInfoCell.self, forCellWithReuseIdentifier: SearchInfoCell.identifier)
         collectionView.register(SearchBookCell.self, forCellWithReuseIdentifier: SearchBookCell.identifier)
         self.collectionView = collectionView
     }
@@ -56,11 +56,34 @@ final class SearchViewController: UIViewController {
             
             let sectionLayoutKind = SearchPresenter.Section.allCases[sectionIndex]
             switch sectionLayoutKind {
+            case .info:
+                return self.generateInfoLayout()
             case .books:
                 return self.generateBooksLayout()
             }
         }
         return layout
+    }
+    
+    private func generateInfoLayout() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .fractionalHeight(1)
+        )
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .absolute(32)
+        )
+        let group = NSCollectionLayoutGroup.horizontal(
+            layoutSize: groupSize,
+            subitems: [item]
+        )
+        
+        let section = NSCollectionLayoutSection(group: group)
+        
+        return section
     }
     
     private func generateBooksLayout() -> NSCollectionLayoutSection {
@@ -70,7 +93,7 @@ final class SearchViewController: UIViewController {
         )
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = NSDirectionalEdgeInsets(
-            top: 8, leading: 8, bottom: 0, trailing: 8
+            top: 0, leading: 8, bottom: 8, trailing: 8
         )
         
         let groupSize = NSCollectionLayoutSize(
@@ -82,20 +105,10 @@ final class SearchViewController: UIViewController {
             subitems: [item]
         )
         group.contentInsets = NSDirectionalEdgeInsets(
-            top: 8, leading: 8, bottom: 0, trailing: 8
+            top: 0, leading: 8, bottom: 0, trailing: 8
         )
         
-        let headerSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1),
-            heightDimension: .absolute(36)
-        )
-        let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
-            layoutSize: headerSize,
-            elementKind: UICollectionView.elementKindSectionHeader,
-            alignment: .top
-        )
         let section = NSCollectionLayoutSection(group: group)
-        section.boundarySupplementaryItems = [sectionHeader]
         
         return section
     }
@@ -131,14 +144,17 @@ extension SearchViewController: UISearchBarDelegate {
 extension SearchViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let selectedBook = presenter.dataSource.itemIdentifier(for: indexPath) else {
+        guard let selectedItem = presenter.dataSource.itemIdentifier(for: indexPath) else {
             #if DEBUG
             print("[searchCollectionView] non exist cell, index: \(indexPath)")
             #endif
             return
         }
-        presenter.showDetailView(with: selectedBook.isbn13)
-        collectionView.deselectItem(at: indexPath, animated: true)
+        
+        if case .books(let searchBookModel) = selectedItem {
+            presenter.showDetailView(with: searchBookModel.isbn13)
+            collectionView.deselectItem(at: indexPath, animated: true)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {

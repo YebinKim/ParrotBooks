@@ -1,5 +1,5 @@
 //
-//  SearchInfoHeaderView.swift
+//  SearchInfoCell.swift
 //  ParrotBooks
 //
 //  Created by vivi on 2023/01/06.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SearchInfoHeaderView: UICollectionReusableView {
+class SearchInfoCell: UICollectionViewCell {
     
     private let labelStackView: UIStackView = {
         let stackView = UIStackView()
@@ -41,9 +41,9 @@ class SearchInfoHeaderView: UICollectionReusableView {
         setupUI()
     }
     
-    func configureView(totalCountText: String, currentPageText: String) {
-        totalCountLabel.text = totalCountText
-        currentPageLabel.text = currentPageText
+    func configureCell(searchInfoModel: SearchInfoModel) {
+        totalCountLabel.text = "총 \(searchInfoModel.totalCount)건"
+        currentPageLabel.text = "\(searchInfoModel.currentPage) / \(searchInfoModel.lastPage)"
     }
     
     private func setupUI() {
@@ -51,7 +51,7 @@ class SearchInfoHeaderView: UICollectionReusableView {
     }
     
     private func setupConstraint() {
-        self.addSubview(labelStackView)
+        self.contentView.addSubview(labelStackView)
         
         labelStackView.addArrangedSubview(totalCountLabel)
         labelStackView.addArrangedSubview(currentPageLabel)
@@ -59,10 +59,10 @@ class SearchInfoHeaderView: UICollectionReusableView {
         labelStackView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            labelStackView.topAnchor.constraint(equalTo: self.topAnchor),
-            labelStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-            labelStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            labelStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -32),
+            labelStackView.topAnchor.constraint(equalTo: self.contentView.topAnchor),
+            labelStackView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
+            labelStackView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
+            labelStackView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -32),
         ])
     }
 }

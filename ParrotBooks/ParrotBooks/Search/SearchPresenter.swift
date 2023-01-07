@@ -14,40 +14,28 @@ protocol SearchViewPresenter {
 
 final class SearchPresenter: SearchViewPresenter {
     
-    typealias Item = SearchModel
+    enum Item: Hashable {
+        case info(SearchInfoModel)
+        case books(SearchBookModel)
+    }
     
     enum Section: CaseIterable {
+        case info
         case books
     }
     
     private weak var view: SearchViewController?
-    private var searchModel: [SearchModel] = [] {
+    private var searchInfoModel = SearchInfoModel()
+    private var searchBookModel: [SearchBookModel] = [] {
         didSet {
-            let snapshot = snapshotForCurrentState()
-            dataSource.apply(snapshot, animatingDifferences: true)
+            DispatchQueue.main.async {
+                let snapshot = self.snapshotForCurrentState()
+                self.dataSource.apply(snapshot, animatingDifferences: true)
+            }
         }
     }
     
     var dataSource: UICollectionViewDiffableDataSource<Section, Item>!
-    
-    private var searchedText: String = ""
-    
-    private let paging: Int = 10
-    private var totalCount: Int = 0 {
-        didSet {
-            guard totalCount != oldValue else { return }
-            DispatchQueue.main.async {
-                self.view?.collectionView.reloadData()
-            }
-        }
-    }
-    private var currentPage: Int = 1
-    private var lastPage: Int {
-        totalCount / paging + 1
-    }
-    private var hasNextPage: Bool {
-        lastPage > currentPage
-    }
     
     required init(view: SearchViewController) {
         self.view = view
@@ -73,6 +61,15 @@ final class SearchPresenter: SearchViewPresenter {
             
             let sectionType = Section.allCases[indexPath.section]
             switch sectionType {
+            case .info:
+                guard let cell = collectionView.dequeueReusableCell(
+                    withReuseIdentifier: SearchInfoCell.identifier,
+                    for: indexPath
+                ) as? SearchInfoCell else {
+                    fatalError("[search] Could not create new cell")
+                }
+                cell.configureCell(searchInfoModel: self.searchInfoModel)
+                return cell
             case .books:
                 guard let cell = collectionView.dequeueReusableCell(
                     withReuseIdentifier: SearchBookCell.identifier,
@@ -81,54 +78,49 @@ final class SearchPresenter: SearchViewPresenter {
                     fatalError("[search] Could not create new cell")
                 }
                 cell.delegate = self
-                cell.configureCell(self.searchModel[indexPath.row])
+                cell.configureCell(self.searchBookModel[indexPath.row])
                 return cell
             }
         }
         
-        dataSource.supplementaryViewProvider = {(
-            collectionView: UICollectionView,
-            kind: String,
-            indexPath: IndexPath
-        ) -> UICollectionReusableView? in
-            guard let supplementaryView = collectionView.dequeueReusableSupplementaryView(
-                ofKind: kind,
-                withReuseIdentifier: SearchInfoHeaderView.identifier,
-                for: indexPath) as? SearchInfoHeaderView else {
-                    fatalError("[search] Could not create header")
-                }
-            supplementaryView.configureView(
-                totalCountText: "총 \(self.totalCount)건 검색됨",
-                currentPageText: "\(self.currentPage) / \(self.lastPage)"
-            )
-            return supplementaryView
+        DispatchQueue.main.async {
+            let snapshot = self.snapshotForCurrentState()
+            self.dataSource.apply(snapshot, animatingDifferences: false)
         }
-        
-        let snapshot = snapshotForCurrentState()
-        dataSource.apply(snapshot, animatingDifferences: false)
     }
     
     private func snapshotForCurrentState() -> NSDiffableDataSourceSnapshot<Section, Item> {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
+        snapshot.appendSections([Section.info])
+        snapshot.appendItems([Item.info(searchInfoModel)])
+        
         snapshot.appendSections([Section.books])
-        snapshot.appendItems(searchModel)
+        var items: [Item] = []
+        for model in searchBookModel {
+            items.append(Item.books(model))
+        }
+        snapshot.appendItems(items)
         return snapshot
     }
     
     func searchClear() {
-        searchModel = []
-        searchedText = ""
+        searchInfoModel = SearchInfoModel()
+        searchBookModel = []
     }
     
     func searchBook(_ name: String, page: Int? = nil) {
         SessionManager().searchBook(name: name, page: page) { response in
             switch response.result {
             case .success(let searchedBook):
-                for book in searchedBook.books {
-                    self.searchModel.append(SearchModel.convert(from: book))
+                if self.searchInfoModel.searchedText != name {
+                    let totalCount: Int = Int(searchedBook.total) ?? 0
+                    self.searchInfoModel.totalCount = totalCount
+                    self.searchInfoModel.searchedText = name
                 }
-                self.searchedText = name
-                self.totalCount = Int(searchedBook.total) ?? 0
+                
+                for book in searchedBook.books {
+                    self.searchBookModel.append(SearchBookModel.convert(from: book))
+                }
             case .failure(let error):
                 #if DEBUG
                 print("[search] searchBook error: \(error)")
@@ -138,11 +130,12 @@ final class SearchPresenter: SearchViewPresenter {
     }
     
     func collectionViewWillDisplay(at indexPath: IndexPath) {
-        let isCloseToBottom: Bool = indexPath.row == searchModel.count - 1
+        let halfPageCount: Int = SearchInfoModel.paging / 2
+        let isCloseToBottom: Bool = indexPath.row == searchBookModel.count - halfPageCount
         
-        if hasNextPage, isCloseToBottom {
-            currentPage += 1
-            searchBook(searchedText, page: currentPage)
+        if searchInfoModel.hasNextPage, isCloseToBottom {
+            searchInfoModel.currentPage += 1
+            searchBook(searchInfoModel.searchedText, page: searchInfoModel.currentPage)
         }
     }
 }
