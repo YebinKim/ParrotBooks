@@ -21,10 +21,15 @@ final class SearchViewController: UIViewController {
     }
     
     private func setupUI() {
+        setupView()
         setupSearchBar()
         setupCollectionView()
         
         setupConstraint()
+    }
+    
+    private func setupView() {
+        self.view.backgroundColor = .white
     }
     
     private func setupSearchBar() {
