@@ -21,7 +21,7 @@ struct SearchedBook: Decodable {
     
     struct Book: Decodable {
         let title: String
-        let subtitle: String
+        let subtitle: String?
         let isbn13: String
         let price: String
         let imageUrl: String

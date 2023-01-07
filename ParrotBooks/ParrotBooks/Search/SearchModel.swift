@@ -27,7 +27,7 @@ struct SearchModel: Hashable {
     static func convert(from book: SearchedBook.Book) -> SearchModel {
         let searchModel = SearchModel(
             title: book.title,
-            subtitle: book.subtitle,
+            subtitle: book.subtitle ?? "",
             isbn13: book.isbn13,
             price: book.price,
             imageUrl: book.imageUrl,

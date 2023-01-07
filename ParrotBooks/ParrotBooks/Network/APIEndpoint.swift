@@ -12,7 +12,7 @@ enum APIEndpoint {
     case search(name: String, page: Int? = nil)
     case detail(isbn13: String)
     
-    static let baseUrl: String = "https://api.itbook.store/1.0/"
+    static let baseUrl: String = "https://api.itbook.store/1.0"
     
     var url: URL {
         let baseUrl: String = "\(APIEndpoint.baseUrl)\(path)"
