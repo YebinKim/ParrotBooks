@@ -7,6 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		441076BB2966C24B00463BBB /* APIEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441076BA2966C24B00463BBB /* APIEndpoint.swift */; };
+		441076BD2966C25F00463BBB /* APIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441076BC2966C25F00463BBB /* APIResponse.swift */; };
+		441076BF2966C27500463BBB /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441076BE2966C27500463BBB /* SessionManager.swift */; };
+		441076C22966CC2300463BBB /* SearchedBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441076C12966CC2300463BBB /* SearchedBook.swift */; };
+		441076C62966D27900463BBB /* DetailedBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441076C52966D27900463BBB /* DetailedBook.swift */; };
+		441076C82966EBCC00463BBB /* MockURLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441076C72966EBCC00463BBB /* MockURLSession.swift */; };
+		441076D32966FA2400463BBB /* NetworkTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441076D22966FA2400463BBB /* NetworkTest.swift */; };
+		44189FCC296783AE002B5648 /* SearchBookCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44189FCB296783AE002B5648 /* SearchBookCell.swift */; };
+		44189FCF296783FA002B5648 /* UICollectionView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44189FCE296783FA002B5648 /* UICollectionView+Extension.swift */; };
+		44189FD129678447002B5648 /* NSObject+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44189FD029678447002B5648 /* NSObject+Extension.swift */; };
+		441C25292967FF95005168C5 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441C25282967FF95005168C5 /* ImageLoader.swift */; };
+		441C252B29680470005168C5 /* SearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441C252A29680470005168C5 /* SearchModel.swift */; };
 		444C80EC2966783A0087BB1A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444C80EB2966783A0087BB1A /* AppDelegate.swift */; };
 		444C80EE2966783A0087BB1A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444C80ED2966783A0087BB1A /* SceneDelegate.swift */; };
 		444C80F02966783A0087BB1A /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444C80EF2966783A0087BB1A /* SearchViewController.swift */; };
@@ -15,10 +27,21 @@
 		444C81032966783B0087BB1A /* ParrotBooksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444C81022966783B0087BB1A /* ParrotBooksTests.swift */; };
 		444C810D2966783B0087BB1A /* ParrotBooksUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444C810C2966783B0087BB1A /* ParrotBooksUITests.swift */; };
 		444C810F2966783B0087BB1A /* ParrotBooksUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444C810E2966783B0087BB1A /* ParrotBooksUITestsLaunchTests.swift */; };
-		444C81212966BF2C0087BB1A /* SearchViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 444C81202966BF2C0087BB1A /* SearchViewController.storyboard */; };
+		44B8C4CA2967E64400984FBA /* SearchPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B8C4C92967E64400984FBA /* SearchPresenter.swift */; };
+		44E4ADA0296841BC00BA7D4D /* DetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E4AD9F296841BC00BA7D4D /* DetailPresenter.swift */; };
+		44E4ADA52969805A00BA7D4D /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E4ADA42969805A00BA7D4D /* String+Extension.swift */; };
+		44EB36362968218B00B5F4FA /* SearchInfoHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44EB36352968218B00B5F4FA /* SearchInfoHeaderView.swift */; };
+		44EB363B296831D400B5F4FA /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44EB363A296831D400B5F4FA /* DetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		441076D42966FA2400463BBB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 444C80E02966783A0087BB1A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 444C80E72966783A0087BB1A;
+			remoteInfo = ParrotBooks;
+		};
 		444C80FF2966783B0087BB1A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 444C80E02966783A0087BB1A /* Project object */;
@@ -36,6 +59,19 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		441076BA2966C24B00463BBB /* APIEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndpoint.swift; sourceTree = "<group>"; };
+		441076BC2966C25F00463BBB /* APIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResponse.swift; sourceTree = "<group>"; };
+		441076BE2966C27500463BBB /* SessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
+		441076C12966CC2300463BBB /* SearchedBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchedBook.swift; sourceTree = "<group>"; };
+		441076C52966D27900463BBB /* DetailedBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedBook.swift; sourceTree = "<group>"; };
+		441076C72966EBCC00463BBB /* MockURLSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLSession.swift; sourceTree = "<group>"; };
+		441076D02966FA2400463BBB /* NetworkTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NetworkTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		441076D22966FA2400463BBB /* NetworkTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkTest.swift; sourceTree = "<group>"; };
+		44189FCB296783AE002B5648 /* SearchBookCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBookCell.swift; sourceTree = "<group>"; };
+		44189FCE296783FA002B5648 /* UICollectionView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Extension.swift"; sourceTree = "<group>"; };
+		44189FD029678447002B5648 /* NSObject+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+Extension.swift"; sourceTree = "<group>"; };
+		441C25282967FF95005168C5 /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
+		441C252A29680470005168C5 /* SearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModel.swift; sourceTree = "<group>"; };
 		444C80E82966783A0087BB1A /* ParrotBooks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ParrotBooks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		444C80EB2966783A0087BB1A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		444C80ED2966783A0087BB1A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -48,10 +84,21 @@
 		444C81082966783B0087BB1A /* ParrotBooksUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ParrotBooksUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		444C810C2966783B0087BB1A /* ParrotBooksUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParrotBooksUITests.swift; sourceTree = "<group>"; };
 		444C810E2966783B0087BB1A /* ParrotBooksUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParrotBooksUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		444C81202966BF2C0087BB1A /* SearchViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SearchViewController.storyboard; sourceTree = "<group>"; };
+		44B8C4C92967E64400984FBA /* SearchPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPresenter.swift; sourceTree = "<group>"; };
+		44E4AD9F296841BC00BA7D4D /* DetailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPresenter.swift; sourceTree = "<group>"; };
+		44E4ADA42969805A00BA7D4D /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
+		44EB36352968218B00B5F4FA /* SearchInfoHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchInfoHeaderView.swift; sourceTree = "<group>"; };
+		44EB363A296831D400B5F4FA /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		441076CD2966FA2400463BBB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		444C80E52966783A0087BB1A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -76,12 +123,63 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		441076B92966C21A00463BBB /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				441076C02966CC1100463BBB /* Model */,
+				441076BA2966C24B00463BBB /* APIEndpoint.swift */,
+				441076BC2966C25F00463BBB /* APIResponse.swift */,
+				441076BE2966C27500463BBB /* SessionManager.swift */,
+				441076C72966EBCC00463BBB /* MockURLSession.swift */,
+				44E4ADA129692ED400BA7D4D /* ImageManager */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		441076C02966CC1100463BBB /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				441076C12966CC2300463BBB /* SearchedBook.swift */,
+				441076C52966D27900463BBB /* DetailedBook.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		441076D12966FA2400463BBB /* NetworkTest */ = {
+			isa = PBXGroup;
+			children = (
+				441076D22966FA2400463BBB /* NetworkTest.swift */,
+			);
+			path = NetworkTest;
+			sourceTree = "<group>";
+		};
+		44189FCA2967839E002B5648 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				444C80EF2966783A0087BB1A /* SearchViewController.swift */,
+				44EB36352968218B00B5F4FA /* SearchInfoHeaderView.swift */,
+				44189FCB296783AE002B5648 /* SearchBookCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		44189FCD296783E0002B5648 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				44189FD029678447002B5648 /* NSObject+Extension.swift */,
+				44189FCE296783FA002B5648 /* UICollectionView+Extension.swift */,
+				44E4ADA42969805A00BA7D4D /* String+Extension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		444C80DF2966783A0087BB1A = {
 			isa = PBXGroup;
 			children = (
 				444C80EA2966783A0087BB1A /* ParrotBooks */,
 				444C81012966783B0087BB1A /* ParrotBooksTests */,
 				444C810B2966783B0087BB1A /* ParrotBooksUITests */,
+				441076D12966FA2400463BBB /* NetworkTest */,
 				444C80E92966783A0087BB1A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -92,6 +190,7 @@
 				444C80E82966783A0087BB1A /* ParrotBooks.app */,
 				444C80FE2966783B0087BB1A /* ParrotBooksTests.xctest */,
 				444C81082966783B0087BB1A /* ParrotBooksUITests.xctest */,
+				441076D02966FA2400463BBB /* NetworkTest.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -102,6 +201,8 @@
 				444C811B2966BE7F0087BB1A /* SceneDelegate */,
 				444C811C2966BECD0087BB1A /* Search */,
 				444C811D2966BED90087BB1A /* Detail */,
+				441076B92966C21A00463BBB /* Network */,
+				44189FCD296783E0002B5648 /* Extensions */,
 				444C811F2966BF0D0087BB1A /* Assets */,
 				444C811E2966BEF80087BB1A /* Supporting Files */,
 			);
@@ -137,8 +238,9 @@
 		444C811C2966BECD0087BB1A /* Search */ = {
 			isa = PBXGroup;
 			children = (
-				444C80EF2966783A0087BB1A /* SearchViewController.swift */,
-				444C81202966BF2C0087BB1A /* SearchViewController.storyboard */,
+				44189FCA2967839E002B5648 /* Views */,
+				441C252A29680470005168C5 /* SearchModel.swift */,
+				44B8C4C92967E64400984FBA /* SearchPresenter.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -146,6 +248,8 @@
 		444C811D2966BED90087BB1A /* Detail */ = {
 			isa = PBXGroup;
 			children = (
+				44EB3637296831BA00B5F4FA /* Views */,
+				44E4AD9F296841BC00BA7D4D /* DetailPresenter.swift */,
 			);
 			path = Detail;
 			sourceTree = "<group>";
@@ -167,9 +271,43 @@
 			path = Assets;
 			sourceTree = "<group>";
 		};
+		44E4ADA129692ED400BA7D4D /* ImageManager */ = {
+			isa = PBXGroup;
+			children = (
+				441C25282967FF95005168C5 /* ImageLoader.swift */,
+			);
+			path = ImageManager;
+			sourceTree = "<group>";
+		};
+		44EB3637296831BA00B5F4FA /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				44EB363A296831D400B5F4FA /* DetailViewController.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		441076CF2966FA2400463BBB /* NetworkTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 441076D62966FA2400463BBB /* Build configuration list for PBXNativeTarget "NetworkTest" */;
+			buildPhases = (
+				441076CC2966FA2400463BBB /* Sources */,
+				441076CD2966FA2400463BBB /* Frameworks */,
+				441076CE2966FA2400463BBB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				441076D52966FA2400463BBB /* PBXTargetDependency */,
+			);
+			name = NetworkTest;
+			productName = NetworkTest;
+			productReference = 441076D02966FA2400463BBB /* NetworkTest.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		444C80E72966783A0087BB1A /* ParrotBooks */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 444C81122966783B0087BB1A /* Build configuration list for PBXNativeTarget "ParrotBooks" */;
@@ -233,6 +371,10 @@
 				LastSwiftUpdateCheck = 1420;
 				LastUpgradeCheck = 1420;
 				TargetAttributes = {
+					441076CF2966FA2400463BBB = {
+						CreatedOnToolsVersion = 14.2;
+						TestTargetID = 444C80E72966783A0087BB1A;
+					};
 					444C80E72966783A0087BB1A = {
 						CreatedOnToolsVersion = 14.2;
 					};
@@ -262,18 +404,25 @@
 				444C80E72966783A0087BB1A /* ParrotBooks */,
 				444C80FD2966783B0087BB1A /* ParrotBooksTests */,
 				444C81072966783B0087BB1A /* ParrotBooksUITests */,
+				441076CF2966FA2400463BBB /* NetworkTest */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		441076CE2966FA2400463BBB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		444C80E62966783A0087BB1A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				444C80F82966783B0087BB1A /* LaunchScreen.storyboard in Resources */,
 				444C80F52966783B0087BB1A /* Assets.xcassets in Resources */,
-				444C81212966BF2C0087BB1A /* SearchViewController.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -294,13 +443,37 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		441076CC2966FA2400463BBB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				441076D32966FA2400463BBB /* NetworkTest.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		444C80E42966783A0087BB1A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				441C25292967FF95005168C5 /* ImageLoader.swift in Sources */,
+				44EB363B296831D400B5F4FA /* DetailViewController.swift in Sources */,
 				444C80F02966783A0087BB1A /* SearchViewController.swift in Sources */,
+				44E4ADA52969805A00BA7D4D /* String+Extension.swift in Sources */,
+				44189FCF296783FA002B5648 /* UICollectionView+Extension.swift in Sources */,
+				441C252B29680470005168C5 /* SearchModel.swift in Sources */,
+				44189FCC296783AE002B5648 /* SearchBookCell.swift in Sources */,
 				444C80EC2966783A0087BB1A /* AppDelegate.swift in Sources */,
+				441076C22966CC2300463BBB /* SearchedBook.swift in Sources */,
+				441076BF2966C27500463BBB /* SessionManager.swift in Sources */,
+				441076C62966D27900463BBB /* DetailedBook.swift in Sources */,
 				444C80EE2966783A0087BB1A /* SceneDelegate.swift in Sources */,
+				44E4ADA0296841BC00BA7D4D /* DetailPresenter.swift in Sources */,
+				441076C82966EBCC00463BBB /* MockURLSession.swift in Sources */,
+				44EB36362968218B00B5F4FA /* SearchInfoHeaderView.swift in Sources */,
+				44B8C4CA2967E64400984FBA /* SearchPresenter.swift in Sources */,
+				441076BD2966C25F00463BBB /* APIResponse.swift in Sources */,
+				441076BB2966C24B00463BBB /* APIEndpoint.swift in Sources */,
+				44189FD129678447002B5648 /* NSObject+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -324,6 +497,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		441076D52966FA2400463BBB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 444C80E72966783A0087BB1A /* ParrotBooks */;
+			targetProxy = 441076D42966FA2400463BBB /* PBXContainerItemProxy */;
+		};
 		444C81002966783B0087BB1A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 444C80E72966783A0087BB1A /* ParrotBooks */;
@@ -348,6 +526,42 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		441076D72966FA2400463BBB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = G5RZ7AYRC2;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = developer.VIVI.NetworkTest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ParrotBooks.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ParrotBooks";
+			};
+			name = Debug;
+		};
+		441076D82966FA2400463BBB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = G5RZ7AYRC2;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = developer.VIVI.NetworkTest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ParrotBooks.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ParrotBooks";
+			};
+			name = Release;
+		};
 		444C81102966783B0087BB1A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -474,9 +688,8 @@
 				INFOPLIST_FILE = "ParrotBooks/Supporting Files/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = SearchViewController;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -502,9 +715,8 @@
 				INFOPLIST_FILE = "ParrotBooks/Supporting Files/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = SearchViewController;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -597,6 +809,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		441076D62966FA2400463BBB /* Build configuration list for PBXNativeTarget "NetworkTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				441076D72966FA2400463BBB /* Debug */,
+				441076D82966FA2400463BBB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		444C80E32966783A0087BB1A /* Build configuration list for PBXProject "ParrotBooks" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
