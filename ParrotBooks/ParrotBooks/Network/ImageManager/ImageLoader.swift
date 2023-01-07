@@ -31,6 +31,10 @@ actor ImageLoader {
         }
     }
     
+    private func cacheToMemory(image: UIImage, key: String) {
+        ImageLoader.cacheMemory.setObject(image, forKey: key as NSString)
+    }
+    
     private func downloadImage(from url: URL) async throws -> UIImage {
         let urlRequest = URLRequest(url: url)
         let task: Task<UIImage, Error> = Task {
@@ -41,7 +45,7 @@ actor ImageLoader {
         let image = try await task.value
         
         if let cacheKey = url.absoluteString.isbn13InUrl {
-            ImageLoader.cacheMemory.setObject(image, forKey: cacheKey as NSString)
+            cacheToMemory(image: image, key: cacheKey)
         }
         
         return image
