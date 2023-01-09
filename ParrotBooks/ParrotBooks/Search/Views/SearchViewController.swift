@@ -139,6 +139,12 @@ extension SearchViewController: UISearchBarDelegate {
         guard let name = searchBar.text else { return }
         presenter.searchBook(name)
     }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText == "" {
+            presenter.searchClear()
+        }
+    }
 }
 
 extension SearchViewController: UICollectionViewDelegate {
