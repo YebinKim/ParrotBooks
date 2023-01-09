@@ -14,6 +14,12 @@ final class SearchViewController: UIViewController {
     var collectionView: UICollectionView!
     private let searchBar = UISearchBar()
     
+    let indicatorView: UIActivityIndicatorView = {
+        let indicatorView = UIActivityIndicatorView()
+        indicatorView.style = .large
+        return indicatorView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -42,6 +48,7 @@ final class SearchViewController: UIViewController {
     private func setupCollectionView() {
         let collectionViewLayout: UICollectionViewLayout = generateLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
+        collectionView.intiateHidden(true)
         collectionView.delegate = self
         collectionView.register(SearchInfoCell.self, forCellWithReuseIdentifier: SearchInfoCell.identifier)
         collectionView.register(SearchBookCell.self, forCellWithReuseIdentifier: SearchBookCell.identifier)
@@ -115,14 +122,19 @@ final class SearchViewController: UIViewController {
     
     private func setupConstraint() {
         self.view.addSubview(collectionView)
+        self.view.addSubview(indicatorView)
         
         collectionView.translatesAutoresizingMaskIntoConstraints = false
+        indicatorView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             collectionView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
+            
+            indicatorView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            indicatorView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
         ])
     }
 }

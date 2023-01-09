@@ -35,6 +35,14 @@ final class SearchPresenter: SearchViewPresenter {
         }
     }
     
+    var isSearching: Bool = false {
+        didSet {
+            DispatchQueue.main.async {
+                self.showSearchingIndicator(self.isSearching)
+            }
+        }
+    }
+    
     var dataSource: UICollectionViewDiffableDataSource<Section, Item>!
     
     private let debouncer = Debouncer(minimumDelay: 0.3)
@@ -48,6 +56,84 @@ final class SearchPresenter: SearchViewPresenter {
         let detailPresenter = DetailPresenter(isbn13: isbn13)
         let detailView = DetailViewController(presenter: detailPresenter)
         self.view?.navigationController?.present(detailView, animated: true)
+    }
+    
+    func searchClear() {
+        searchInfoModel = SearchInfoModel()
+        searchBookModel = []
+        view?.collectionView.intiateHidden(true)
+    }
+    
+    func searchBook(_ name: String, page: Int = 1) {
+        
+        if name == "" {
+            searchClear()
+            return
+        }
+        
+        debouncer.debounce { [weak self] in
+            guard let self = self else { return }
+            
+            self.isSearching = true
+            
+            SessionManager().searchBook(name: name, page: page) { response in
+                switch response.result {
+                case .success(let searchedBook):
+                    if page >= 1 {
+                        self.searchBookModel = []
+                    }
+                    
+                    if self.searchInfoModel.searchedText != name {
+                        let totalCount: Int = Int(searchedBook.total) ?? 0
+                        self.searchInfoModel.totalCount = totalCount
+                        self.searchInfoModel.searchedText = name
+                    }
+                    
+                    for book in searchedBook.books {
+                        self.searchBookModel.append(SearchBookModel.convert(from: book))
+                    }
+                case .failure(let error):
+                    #if DEBUG
+                    print("[search] searchBook error: \(error)")
+                    #endif
+                }
+                
+                self.isSearching = false
+            }
+        }
+    }
+    
+    func collectionViewWillDisplay(at indexPath: IndexPath) {
+        let halfPageCount: Int = SearchInfoModel.paging / 2
+        let isCloseToBottom: Bool = indexPath.row == searchBookModel.count - halfPageCount
+        
+        if searchInfoModel.hasNextPage, isCloseToBottom {
+            searchInfoModel.currentPage += 1
+            searchBook(searchInfoModel.searchedText, page: searchInfoModel.currentPage)
+        }
+    }
+    
+    private func showSearchingIndicator(_ isShow: Bool) {
+        let duration: TimeInterval = 0.3
+        
+        if isShow {
+            view?.indicatorView.startAnimating()
+            
+            UIView.animate(withDuration: duration, animations: {
+                self.view?.indicatorView.alpha = 1.0
+                self.view?.collectionView.alpha = 0.0
+            }, completion: { _ in
+                self.view?.collectionView.isHidden = true
+            })
+        } else {
+            UIView.animate(withDuration: duration, animations: {
+                self.view?.indicatorView.alpha = 0.0
+                self.view?.collectionView.alpha = 1.0
+            }, completion: { _ in
+                self.view?.indicatorView.stopAnimating()
+                self.view?.collectionView.isHidden = false
+            })
+        }
     }
     
     private func configureDataSource() {
@@ -103,54 +189,6 @@ final class SearchPresenter: SearchViewPresenter {
         }
         snapshot.appendItems(items)
         return snapshot
-    }
-    
-    func searchClear() {
-        searchInfoModel = SearchInfoModel()
-        searchBookModel = []
-    }
-    
-    func searchBook(_ name: String, page: Int = 1) {
-        
-        if name == "" {
-            searchClear()
-            return
-        }
-        
-        debouncer.debounce { [weak self] in
-            guard let self = self else { return }
-            
-            SessionManager().searchBook(name: name, page: page) { response in
-                switch response.result {
-                case .success(let searchedBook):
-                    if page >= 1 {
-                        self.searchBookModel = []
-                    }
-                    if self.searchInfoModel.searchedText != name {
-                        let totalCount: Int = Int(searchedBook.total) ?? 0
-                        self.searchInfoModel.totalCount = totalCount
-                        self.searchInfoModel.searchedText = name
-                    }
-                    for book in searchedBook.books {
-                        self.searchBookModel.append(SearchBookModel.convert(from: book))
-                    }
-                case .failure(let error):
-                    #if DEBUG
-                    print("[search] searchBook error: \(error)")
-                    #endif
-                }
-            }
-        }
-    }
-    
-    func collectionViewWillDisplay(at indexPath: IndexPath) {
-        let halfPageCount: Int = SearchInfoModel.paging / 2
-        let isCloseToBottom: Bool = indexPath.row == searchBookModel.count - halfPageCount
-        
-        if searchInfoModel.hasNextPage, isCloseToBottom {
-            searchInfoModel.currentPage += 1
-            searchBook(searchInfoModel.searchedText, page: searchInfoModel.currentPage)
-        }
     }
 }
 
