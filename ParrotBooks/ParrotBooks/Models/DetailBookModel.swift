@@ -1,5 +1,5 @@
 //
-//  DetailedBook.swift
+//  DetailBookModel.swift
 //  ParrotBooks
 //
 //  Created by vivi on 2023/01/05.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct DetailedBook: Decodable {
+struct DetailBookModel: Decodable {
     
     let error: String
     let title: String

@@ -52,7 +52,7 @@ extension SearchViewController: SearchViewDelegate {
     }
     
     func pushDetailView(with isbn13: String) {
-        let detailViewController = DetailViewController(presenter: DetailPresenter(isbn13: isbn13))
+        let detailViewController = DetailViewController(isbn13: isbn13)
         self.navigationController?.pushViewController(detailViewController, animated: true)
     }
 }

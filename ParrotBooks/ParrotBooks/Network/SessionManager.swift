@@ -50,7 +50,7 @@ final class SessionManager {
     
     func detailBook(
         isbn13: String,
-        completion: @escaping (APIResponse<DetailedBook>) -> Void
+        completion: @escaping (APIResponse<DetailBookModel>) -> Void
     ) {
         
         dataTask?.cancel()
@@ -66,10 +66,10 @@ final class SessionManager {
             }
             
             if let response = response as? HTTPURLResponse {
-                let apiResponse = APIResponse<DetailedBook>(data: data, response: response, error: error as? APIError)
+                let apiResponse = APIResponse<DetailBookModel>(data: data, response: response, error: error as? APIError)
                 completion(apiResponse)
             } else {
-                let apiResponse = APIResponse<DetailedBook>(data: nil, response: nil, error: error as? APIError)
+                let apiResponse = APIResponse<DetailBookModel>(data: nil, response: nil, error: error as? APIError)
                 completion(apiResponse)
             }
         }
