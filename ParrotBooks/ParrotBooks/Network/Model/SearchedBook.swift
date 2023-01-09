@@ -9,11 +9,13 @@ import Foundation
 
 struct SearchedBook: Decodable {
     
+    let error: String
     let total: String
-    let page: String
+    let page: String?
     let books: [Book]
     
     enum CodingKeys: String, CodingKey {
+        case error
         case total
         case page
         case books
