@@ -129,21 +129,17 @@ final class SearchViewController: UIViewController {
 
 extension SearchViewController: UISearchBarDelegate {
     
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        presenter.searchBook(searchText)
+    }
+    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         #if DEBUG
         print("[searchBar] text: \(searchBar.text ?? "no text")")
         #endif
         
-        presenter.searchClear()
-        
         guard let name = searchBar.text else { return }
         presenter.searchBook(name)
-    }
-    
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if searchText == "" {
-            presenter.searchClear()
-        }
     }
 }
 

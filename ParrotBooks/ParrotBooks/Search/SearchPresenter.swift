@@ -37,6 +37,8 @@ final class SearchPresenter: SearchViewPresenter {
     
     var dataSource: UICollectionViewDiffableDataSource<Section, Item>!
     
+    private let debouncer = Debouncer(minimumDelay: 0.3)
+    
     required init(view: SearchViewController) {
         self.view = view
         configureDataSource()
@@ -108,23 +110,35 @@ final class SearchPresenter: SearchViewPresenter {
         searchBookModel = []
     }
     
-    func searchBook(_ name: String, page: Int? = nil) {
-        SessionManager().searchBook(name: name, page: page) { response in
-            switch response.result {
-            case .success(let searchedBook):
-                if self.searchInfoModel.searchedText != name {
-                    let totalCount: Int = Int(searchedBook.total) ?? 0
-                    self.searchInfoModel.totalCount = totalCount
-                    self.searchInfoModel.searchedText = name
+    func searchBook(_ name: String, page: Int = 1) {
+        
+        if name == "" {
+            searchClear()
+            return
+        }
+        
+        debouncer.debounce { [weak self] in
+            guard let self = self else { return }
+            
+            SessionManager().searchBook(name: name, page: page) { response in
+                switch response.result {
+                case .success(let searchedBook):
+                    if page >= 1 {
+                        self.searchBookModel = []
+                    }
+                    if self.searchInfoModel.searchedText != name {
+                        let totalCount: Int = Int(searchedBook.total) ?? 0
+                        self.searchInfoModel.totalCount = totalCount
+                        self.searchInfoModel.searchedText = name
+                    }
+                    for book in searchedBook.books {
+                        self.searchBookModel.append(SearchBookModel.convert(from: book))
+                    }
+                case .failure(let error):
+                    #if DEBUG
+                    print("[search] searchBook error: \(error)")
+                    #endif
                 }
-                
-                for book in searchedBook.books {
-                    self.searchBookModel.append(SearchBookModel.convert(from: book))
-                }
-            case .failure(let error):
-                #if DEBUG
-                print("[search] searchBook error: \(error)")
-                #endif
             }
         }
     }
