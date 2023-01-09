@@ -21,7 +21,7 @@ final class SessionManager {
     func searchBook(
         name: String,
         page: Int? = nil,
-        completion: @escaping (APIResponse<SearchedBook>) -> Void
+        completion: @escaping (APIResponse<SearchBookModel>) -> Void
     ) {
         
         dataTask?.cancel()
@@ -37,10 +37,10 @@ final class SessionManager {
             }
             
             if let response = response as? HTTPURLResponse {
-                let apiResponse = APIResponse<SearchedBook>(data: data, response: response, error: error as? APIError)
+                let apiResponse = APIResponse<SearchBookModel>(data: data, response: response, error: error as? APIError)
                 completion(apiResponse)
             } else {
-                let apiResponse = APIResponse<SearchedBook>(data: nil, response: nil, error: error as? APIError)
+                let apiResponse = APIResponse<SearchBookModel>(data: nil, response: nil, error: error as? APIError)
                 completion(apiResponse)
             }
         }

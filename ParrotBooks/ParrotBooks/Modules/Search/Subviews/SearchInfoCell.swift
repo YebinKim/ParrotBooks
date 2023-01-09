@@ -41,9 +41,13 @@ class SearchInfoCell: UICollectionViewCell {
         setupUI()
     }
     
-    func configureCell(searchInfoModel: SearchInfoModel) {
-        totalCountLabel.text = "총 \(searchInfoModel.totalCount)건"
-        currentPageLabel.text = "\(searchInfoModel.currentPage) / \(searchInfoModel.lastPage)"
+    func configureCell(
+        totalCount: Int,
+        currentPage: Int,
+        lastPage: Int
+    ) {
+        totalCountLabel.text = "총 \(totalCount)건"
+        currentPageLabel.text = "\(currentPage) / \(lastPage)"
     }
     
     private func setupUI() {
