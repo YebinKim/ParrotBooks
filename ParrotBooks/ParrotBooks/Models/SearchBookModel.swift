@@ -1,5 +1,5 @@
 //
-//  SearchedBook.swift
+//  SearchBookModel.swift
 //  ParrotBooks
 //
 //  Created by vivi on 2023/01/05.
@@ -7,19 +7,21 @@
 
 import Foundation
 
-struct SearchedBook: Decodable {
+struct SearchBookModel: Decodable, Hashable {
     
+    let error: String
     let total: String
-    let page: String
+    let page: String?
     let books: [Book]
     
     enum CodingKeys: String, CodingKey {
+        case error
         case total
         case page
         case books
     }
     
-    struct Book: Decodable {
+    struct Book: Decodable, Hashable {
         let title: String
         let subtitle: String?
         let isbn13: String

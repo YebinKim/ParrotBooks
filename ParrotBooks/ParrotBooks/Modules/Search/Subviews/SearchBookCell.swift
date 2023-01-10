@@ -87,7 +87,7 @@ final class SearchBookCell: UICollectionViewCell {
         imageView.image = nil
     }
     
-    func configureCell(_ book: SearchBookModel) {
+    func configureCell(_ book: SearchBookModel.Book) {
         titleLabel.text = book.title
         subtitleLabel.text = book.subtitle
         priceLabel.text = "Price: \(book.price)"
@@ -100,7 +100,7 @@ final class SearchBookCell: UICollectionViewCell {
             }
         }
         
-        subtitleLabel.isHidden = book.subtitle.isEmpty
+        subtitleLabel.isHidden = book.subtitle?.isEmpty ?? true
     }
     
     private func setupUI() {
