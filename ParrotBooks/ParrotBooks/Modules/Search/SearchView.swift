@@ -146,10 +146,10 @@ final class SearchView: UIView {
         indicatorView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: self.topAnchor),
-            collectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            collectionView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
+            collectionView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor),
             
             indicatorView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             indicatorView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
