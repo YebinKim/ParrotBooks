@@ -250,7 +250,9 @@ extension DetailView: DetailViewProtocol {
         
         storeUrlButton.isHidden = book.storeUrl == ""
         
-        for (name, urlString) in book.pdfUrls ?? [:] {
+        guard let pdfUrls = book.pdfUrls else { return }
+        let sortedPdfUrls = pdfUrls.sorted { $0.0 < $1.0 }
+        for (name, urlString) in sortedPdfUrls {
             let pdfDownloadButton = pdfDownloadButton(name: name, urlString: urlString)
             mainStackView.addArrangedSubview(pdfDownloadButton)
             pdfDownloadButton.translatesAutoresizingMaskIntoConstraints = false
