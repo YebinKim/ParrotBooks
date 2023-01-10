@@ -150,7 +150,9 @@ final class DetailView: UIView {
         
         setupConstraint()
         
-        presenter.fetchDetailBook(with: presenter.isbn13)
+        Task {
+            await presenter.fetchDetailBook(with: presenter.isbn13)
+        }
     }
     
     private func setupView() {

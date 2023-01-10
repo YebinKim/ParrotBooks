@@ -61,7 +61,7 @@ final class PdfView: UIView {
 extension PdfView: PdfViewProtocol {
     
     func setupPdfDocumnet(_ document: PDFDocument) {
-        DispatchQueue.main.async {
+        Task { @MainActor in
             self.pdfView.document = document
         }
     }

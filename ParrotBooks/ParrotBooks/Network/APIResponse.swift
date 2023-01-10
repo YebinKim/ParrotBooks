@@ -21,8 +21,7 @@ struct APIResponse<T: Decodable> {
     
     init(
         data: Data?,
-        response: HTTPURLResponse?,
-        error: APIError?
+        response: HTTPURLResponse?
     ) {
         guard let data = data,
               let statusCode = response?.statusCode else {

@@ -167,9 +167,8 @@ extension SearchView: SearchViewProtocol {
     func showSearchResult(_ isShow: Bool) {
         let duration: TimeInterval = 0.3
 
-        DispatchQueue.main.async { [weak self] in
-            guard let self else { return }
-
+        Task { @MainActor in
+            
             if isShow {
                 UIView.animate(withDuration: duration, animations: {
                     self.indicatorView.alpha = 0.0

@@ -9,71 +9,65 @@ import Foundation
 
 final class SessionManager {
     
-    private let session: URLSessionProtocol
-    private var dataTask: URLSessionDataTaskProtocol?
+    private let session: URLSession
+    
+    private var searchDataTask: Task<APIResponse<SearchBookModel>, Error>?
+    private var detailDataTask: Task<APIResponse<DetailBookModel>, Error>?
     
     init(
-        session: URLSessionProtocol = URLSession.shared
+        session: URLSession = URLSession.shared
     ) {
         self.session = session
     }
     
     func searchBook(
         name: String,
-        page: Int? = nil,
-        completion: @escaping (APIResponse<SearchBookModel>) -> Void
-    ) {
+        page: Int? = nil
+    ) async throws -> APIResponse<SearchBookModel> {
         
-        dataTask?.cancel()
+        searchDataTask?.cancel()
         
-        let endpoint = APIEndpoint.search(name: name, page: page)
-        let url = endpoint.url
-        var request = URLRequest(url: url)
-        request.httpMethod = endpoint.method
-        
-        dataTask = session.dataTask(with: request) { [weak self] data, response, error in
-            defer {
-                self?.dataTask = nil
-            }
+        searchDataTask = Task { () -> APIResponse<SearchBookModel> in
+            let endpoint = APIEndpoint.search(name: name, page: page)
+            let url = endpoint.url
+            var request = URLRequest(url: url)
+            request.httpMethod = endpoint.method
             
-            if let response = response as? HTTPURLResponse {
-                let apiResponse = APIResponse<SearchBookModel>(data: data, response: response, error: error as? APIError)
-                completion(apiResponse)
-            } else {
-                let apiResponse = APIResponse<SearchBookModel>(data: nil, response: nil, error: error as? APIError)
-                completion(apiResponse)
+            let (data, response) = try await session.data(for: request)
+            try Task.checkCancellation()
+            
+            guard let response = response as? HTTPURLResponse else {
+                throw APIError.unknown
             }
+            let apiResponse = APIResponse<SearchBookModel>(data: data, response: response)
+            return apiResponse
         }
         
-        dataTask?.resume()
+        return try await searchDataTask!.value
     }
     
     func detailBook(
-        isbn13: String,
-        completion: @escaping (APIResponse<DetailBookModel>) -> Void
-    ) {
+        isbn13: String
+    ) async throws -> APIResponse<DetailBookModel> {
         
-        dataTask?.cancel()
+        detailDataTask?.cancel()
         
-        let endpoint = APIEndpoint.detail(isbn13: isbn13)
-        let url = endpoint.url
-        var request = URLRequest(url: url)
-        request.httpMethod = endpoint.method
-        
-        dataTask = session.dataTask(with: request) { [weak self] data, response, error in
-            defer {
-                self?.dataTask = nil
-            }
+        detailDataTask = Task { () -> APIResponse<DetailBookModel> in
+            let endpoint = APIEndpoint.detail(isbn13: isbn13)
+            let url = endpoint.url
+            var request = URLRequest(url: url)
+            request.httpMethod = endpoint.method
             
-            if let response = response as? HTTPURLResponse {
-                let apiResponse = APIResponse<DetailBookModel>(data: data, response: response, error: error as? APIError)
-                completion(apiResponse)
-            } else {
-                let apiResponse = APIResponse<DetailBookModel>(data: nil, response: nil, error: error as? APIError)
-                completion(apiResponse)
+            let (data, response) = try await session.data(for: request)
+            try Task.checkCancellation()
+            
+            guard let response = response as? HTTPURLResponse else {
+                throw APIError.unknown
             }
+            let apiResponse = APIResponse<DetailBookModel>(data: data, response: response)
+            return apiResponse
         }
         
-        dataTask?.resume()
+        return try await detailDataTask!.value
     }
 }

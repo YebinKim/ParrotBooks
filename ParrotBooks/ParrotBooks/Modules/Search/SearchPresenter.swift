@@ -85,7 +85,7 @@ final class SearchPresenter: SearchPresenterProtocol {
     var currentPage: Int = 1
     var books: [Book] = [] {
         didSet {
-            DispatchQueue.main.async {
+            Task { @MainActor in
                 let snapshot = self.snapshotForCurrentState()
                 self.dataSource.apply(snapshot, animatingDifferences: true)
             }
@@ -102,31 +102,33 @@ final class SearchPresenter: SearchPresenterProtocol {
     }
     
     func searchBook(with name: String) {
-        searchClear()
-        searchBook(with: name, page: currentPage)
-        
-        viewState = .search
+        Task {
+            searchClear()
+            await searchBook(with: name, page: currentPage)
+            
+            viewState = .search
+        }
     }
     
-    func searchBook(with name: String, page: Int) {
-        Task {
-            await debouncer.debounce {
-                SessionManager().searchBook(name: name, page: page) { response in
-                    switch response.result {
-                    case .success(let searchedBook):
-                        guard self.searchedBook?.books != searchedBook.books else { return }
-                        
-                        self.searchedBook = searchedBook
-                        self.books.append(contentsOf: searchedBook.books)
-                    case .failure(let error):
-                        #if DEBUG
-                        print("[search] searchBook error: \(error)")
-                        #endif
-                    }
-                    
-                    self.viewState = .list
-                }
+    func searchBook(with name: String, page: Int) async {
+        await debouncer.debounce {
+            guard let response = try? await SessionManager().searchBook(name: name, page: page) else {
+                return
             }
+            
+            switch response.result {
+            case .success(let searchedBook):
+                guard self.searchedBook?.books != searchedBook.books else { return }
+                
+                self.searchedBook = searchedBook
+                self.books.append(contentsOf: searchedBook.books)
+            case .failure(let error):
+                #if DEBUG
+                print("[search] searchBook error: \(error)")
+                #endif
+            }
+            
+            self.viewState = .list
         }
     }
     
@@ -142,7 +144,10 @@ final class SearchPresenter: SearchPresenterProtocol {
         
         if hasNextPage, isCloseToBottom {
             currentPage += 1
-            searchBook(with: view.searchedText, page: currentPage)
+            
+            Task {
+                await searchBook(with: view.searchedText, page: currentPage)
+            }
         }
     }
     
@@ -161,7 +166,7 @@ final class SearchPresenter: SearchPresenterProtocol {
     }
     
     func configureDataSource(_ dataSource: UICollectionViewDiffableDataSource<Section, Item>) {
-        DispatchQueue.main.async {
+        Task { @MainActor in
             self.dataSource = dataSource
             let snapshot = self.snapshotForCurrentState()
             dataSource.apply(snapshot, animatingDifferences: false)

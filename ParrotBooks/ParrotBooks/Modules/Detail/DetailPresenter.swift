@@ -13,7 +13,7 @@ protocol DetailPresenterProtocol {
     var detailedBook: DetailBookModel? { get set }
     var isbn13: String? { get }
     
-    func fetchDetailBook(with isbn13: String?)
+    func fetchDetailBook(with isbn13: String?) async
     
     func storeUrlButtonTapped(with urlString: String?)
     func pdfDownloadButtonTapped(_ button: UIButton)
@@ -37,21 +37,22 @@ final class DetailPresenter: DetailPresenterProtocol {
         self.isbn13 = isbn13
     }
     
-    func fetchDetailBook(with isbn13: String?) {
-        guard let isbn13 else { return }
+    func fetchDetailBook(with isbn13: String?) async {
+        guard let isbn13,
+              let response = try? await SessionManager().detailBook(isbn13: isbn13) else {
+            return
+        }
         
-        SessionManager().detailBook(isbn13: isbn13) { response in
-            switch response.result {
-            case .success(let detailedBook):
-                self.detailedBook = detailedBook
-                DispatchQueue.main.async {
-                    self.view.setupView(with: detailedBook)
-                }
-            case .failure(let error):
-                #if DEBUG
-                print("[detail] detailBook error: \(error)")
-                #endif
+        switch response.result {
+        case .success(let detailedBook):
+            self.detailedBook = detailedBook
+            Task { @MainActor in
+                self.view.setupView(with: detailedBook)
             }
+        case .failure(let error):
+            #if DEBUG
+            print("[detail] detailBook error: \(error)")
+            #endif
         }
     }
     

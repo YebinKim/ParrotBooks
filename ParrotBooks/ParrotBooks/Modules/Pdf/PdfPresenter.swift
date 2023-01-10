@@ -35,9 +35,9 @@ final class PdfPresenter: PdfPresenterProtocol {
     func fetchPdfDocument(with url: URL?) {
         guard let url else { return }
         
-        DispatchQueue.global().async { [weak self] in
+        Task { @MainActor in
             guard let pdfDocument = PDFDocument(url: url) else { return }
-            self?.view.setupPdfDocumnet(pdfDocument)
+            self.view.setupPdfDocumnet(pdfDocument)
         }
     }
 }
