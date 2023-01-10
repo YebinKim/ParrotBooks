@@ -66,19 +66,13 @@ final class DetailPresenter: DetailPresenterProtocol {
     
     func pdfDownloadButtonTapped(_ button: UIButton) {
         guard let pdfUrls = detailedBook?.pdfUrls,
-              let name = button.titleLabel?.text else { return }
+              let pdfName = button.titleLabel?.text,
+              let urlString = pdfUrls[pdfName],
+              let pdfUrl = URL(string: urlString) else { return }
         #if DEBUG
         print("[detail] pdfDownloadButtonTapped with: \(pdfUrls)")
         #endif
         
-        if let urlString = pdfUrls[name],
-           let url = URL(string: urlString) {
-            DispatchQueue.global().async { [weak self] in
-                let pdfDocument = PDFDocument(url: url)
-                DispatchQueue.main.async {
-                    self?.view.setupPdfView(document: pdfDocument)
-                }
-            }
-        }
+        view.presentPDFView(with: pdfUrl)
     }
 }

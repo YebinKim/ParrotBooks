@@ -10,13 +10,13 @@ import PDFKit
 
 // view -> viewcontroller
 protocol DetailViewDelegate: AnyObject {
-    func dismissPDFView()
+    func presentPDFView(with url: URL)
 }
 
 // presenter -> view
 protocol DetailViewProtocol: AnyObject {
     func setupView(with book: DetailBookModel)
-    func setupPdfView(document: PDFDocument?)
+    func presentPDFView(with url: URL)
 }
 
 final class DetailView: UIView {
@@ -144,16 +144,6 @@ final class DetailView: UIView {
         return button
     }()
     
-    let pdfView: PDFView = {
-        let pdfView = PDFView()
-        pdfView.isHidden = true
-        pdfView.autoScales = true
-        pdfView.displayMode = .singlePageContinuous
-        pdfView.displayDirection = .horizontal
-        pdfView.usePageViewController(true)
-        return pdfView
-    }()
-    
     func setupUI() {
         setupView()
         setupStoreUrlButton()
@@ -192,9 +182,6 @@ final class DetailView: UIView {
         
         imageStackView.addArrangedSubview(imageView)
         
-        self.addSubview(pdfView)
-        
-        pdfView.translatesAutoresizingMaskIntoConstraints = false
         mainScrollView.translatesAutoresizingMaskIntoConstraints = false
         mainStackView.translatesAutoresizingMaskIntoConstraints = false
         imageStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -202,11 +189,6 @@ final class DetailView: UIView {
         storeUrlButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            pdfView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
-            pdfView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor),
-            pdfView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor),
-            pdfView.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor),
-            
             mainScrollView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 16),
             mainScrollView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -16),
             mainScrollView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 16),
@@ -285,8 +267,7 @@ extension DetailView: DetailViewProtocol {
         }
     }
     
-    func setupPdfView(document: PDFDocument?) {
-        self.pdfView.document = document
-        self.pdfView.isHidden = false
+    func presentPDFView(with url: URL) {
+        delegate?.presentPDFView(with: url)
     }
 }

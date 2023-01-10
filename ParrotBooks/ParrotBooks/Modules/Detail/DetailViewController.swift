@@ -55,7 +55,8 @@ final class DetailViewController: UIViewController {
 
 extension DetailViewController: DetailViewDelegate {
     
-    func dismissPDFView() {
-        self.navigationController?.dismiss(animated: true)
+    func presentPDFView(with url: URL) {
+        let detailViewController = PdfViewController(url: url)
+        self.navigationController?.present(detailViewController, animated: true)
     }
 }
