@@ -7,24 +7,34 @@
 
 import Foundation
 
-final class Debouncer {
+actor Debouncer {
     
     private let minimumDelay: TimeInterval
-    private let queue: DispatchQueue
+    private var task: Task<Void, Never>?
     
-    private var workItem = DispatchWorkItem(block: {})
+    private var nanoseconds: UInt64 {
+        UInt64(minimumDelay * 1_000_000_000)
+    }
     
     init(
         minimumDelay: TimeInterval,
-        queue: DispatchQueue = .global()
+        task: Task<Void, Never>? = nil
     ) {
         self.minimumDelay = minimumDelay
-        self.queue = queue
+        self.task = task
     }
     
-    func debounce(action: @escaping (() -> Void)) {
-        workItem.cancel()
-        workItem = DispatchWorkItem(block: { action() })
-        queue.asyncAfter(deadline: .now() + minimumDelay, execute: workItem)
+    func debounce(action: @escaping () async -> Void) {
+        self.task?.cancel()
+        
+        self.task = Task {
+            do {
+                try await Task.sleep(nanoseconds: nanoseconds)
+                guard !Task.isCancelled else { return }
+                await action()
+            } catch {
+                return
+            }
+        }
     }
 }

@@ -109,23 +109,25 @@ final class SearchPresenter: SearchPresenterProtocol {
     }
     
     func searchBook(with name: String, page: Int) {
-        debouncer.debounce { [weak self] in
-            guard let self else { return }
-            
-            SessionManager().searchBook(name: name, page: page) { response in
-                switch response.result {
-                case .success(let searchedBook):
-                    guard self.searchedBook?.books != searchedBook.books else { return }
-                    
-                    self.searchedBook = searchedBook
-                    self.books.append(contentsOf: searchedBook.books)
-                case .failure(let error):
-                    #if DEBUG
-                    print("[search] searchBook error: \(error)")
-                    #endif
-                }
+        Task {
+            await debouncer.debounce { [weak self] in
+                guard let self else { return }
                 
-                self.viewState = .list
+                SessionManager().searchBook(name: name, page: page) { response in
+                    switch response.result {
+                    case .success(let searchedBook):
+                        guard self.searchedBook?.books != searchedBook.books else { return }
+                        
+                        self.searchedBook = searchedBook
+                        self.books.append(contentsOf: searchedBook.books)
+                    case .failure(let error):
+                        #if DEBUG
+                        print("[search] searchBook error: \(error)")
+                        #endif
+                    }
+                    
+                    self.viewState = .list
+                }
             }
         }
     }
