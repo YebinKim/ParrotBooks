@@ -110,9 +110,7 @@ final class SearchPresenter: SearchPresenterProtocol {
     
     func searchBook(with name: String, page: Int) {
         Task {
-            await debouncer.debounce { [weak self] in
-                guard let self else { return }
-                
+            await debouncer.debounce {
                 SessionManager().searchBook(name: name, page: page) { response in
                     switch response.result {
                     case .success(let searchedBook):
