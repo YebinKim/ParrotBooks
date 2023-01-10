@@ -236,6 +236,7 @@ extension SearchView: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         searchBarText = searchText
+        presenter.searchClear()
         presenter.searchBook(with: searchBarText)
     }
     

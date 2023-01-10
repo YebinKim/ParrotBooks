@@ -103,18 +103,20 @@ final class SearchPresenter: SearchPresenterProtocol {
     
     func searchBook(with name: String) {
         searchClear()
-        searchBook(with: name, page: 1)
+        searchBook(with: name, page: currentPage)
         
         viewState = .search
     }
     
-    func searchBook(with name: String, page: Int = 1) {
+    func searchBook(with name: String, page: Int) {
         debouncer.debounce { [weak self] in
             guard let self else { return }
             
             SessionManager().searchBook(name: name, page: page) { response in
                 switch response.result {
                 case .success(let searchedBook):
+                    guard self.searchedBook?.books != searchedBook.books else { return }
+                    
                     self.searchedBook = searchedBook
                     self.books.append(contentsOf: searchedBook.books)
                 case .failure(let error):
