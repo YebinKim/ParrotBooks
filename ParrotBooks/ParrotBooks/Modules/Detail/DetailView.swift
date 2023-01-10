@@ -250,21 +250,24 @@ extension DetailView: DetailViewProtocol {
         
         storeUrlButton.isHidden = book.storeUrl == ""
         
-        guard let pdfUrls = book.pdfUrls else { return }
-        let sortedPdfUrls = pdfUrls.sorted { $0.0 < $1.0 }
-        for (name, urlString) in sortedPdfUrls {
-            let pdfDownloadButton = pdfDownloadButton(name: name, urlString: urlString)
-            mainStackView.addArrangedSubview(pdfDownloadButton)
-            pdfDownloadButton.translatesAutoresizingMaskIntoConstraints = false
-            NSLayoutConstraint.activate([
-                pdfDownloadButton.widthAnchor.constraint(equalTo: mainStackView.widthAnchor),
-            ])
-            pdfDownloadButton.addTarget(self, action: #selector(pdfDownloadButtonTapped(_:)), for: .touchUpInside)
-        }
-        
         if let url = URL(string: book.imageUrl) {
             Task {
                 imageView.image = try await ImageLoader().fetch(url)
+            }
+        }
+        
+        if let pdfUrls = book.pdfUrls {
+            let sortedPdfUrls = pdfUrls.sorted { $0.0 < $1.0 }
+            for (name, urlString) in sortedPdfUrls {
+                
+                let pdfDownloadButton = pdfDownloadButton(name: name, urlString: urlString)
+                mainStackView.addArrangedSubview(pdfDownloadButton)
+                pdfDownloadButton.translatesAutoresizingMaskIntoConstraints = false
+                NSLayoutConstraint.activate([
+                    pdfDownloadButton.widthAnchor.constraint(equalTo: mainStackView.widthAnchor),
+                ])
+                
+                pdfDownloadButton.addTarget(self, action: #selector(pdfDownloadButtonTapped(_:)), for: .touchUpInside)
             }
         }
     }
